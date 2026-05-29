@@ -1,20 +1,25 @@
 ---
 import revenueData from "../data/revenue.json";
 import { computeRevenue } from "../scripts/revenue";
-
-const realista = revenueData.scenarios.realista;
-const realResult = computeRevenue(realista as any);
-const ranges = revenueData.ranges;
+import RevenueCalculator from "./RevenueCalculator.astro";
 
 // ─────────────────────────────────────────────────────────────
 // INFO FINANCIERA CAPADA.
 // Pon esto en `true` para volver a mostrar al cliente el KPI de
 // ingresos previstos y la calculadora interactiva (sliders +
-// escenarios pesimista/realista/optimista). De momento se ocultan
-// para no enseñar cifras de dinero potenciales, pero todo el
-// código sigue intacto en la estructura del proyecto.
+// escenarios pesimista/realista/optimista).
+//
+// SEGURIDAD: con el flag en `false`, el componente <RevenueCalculator/>
+// no se renderiza, por lo que Astro NO incluye ni las cifras ni la
+// lógica de cálculo en el JavaScript público (no son inspeccionables
+// desde el navegador). Las cifras solo se calculan en build (servidor).
 // ─────────────────────────────────────────────────────────────
 const SHOW_FINANCIALS = false;
+
+// Solo se usa (en build, lado servidor) para el KPI de ingresos cuando el flag está activo.
+const realResult = SHOW_FINANCIALS
+  ? computeRevenue(revenueData.scenarios.realista as any)
+  : { total: 0 };
 ---
 
 <section id="panel" class="relative py-20 sm:py-28 border-y border-club-ink/10 overflow-hidden">
@@ -59,218 +64,20 @@ const SHOW_FINANCIALS = false;
       </div>
     </div>
 
-    <!-- CALCULADORA DE INGRESOS (capada · ver flag SHOW_FINANCIALS arriba) -->
-    {SHOW_FINANCIALS && (
-    <div class="grid lg:grid-cols-12 gap-5 lg:gap-7">
-      <!-- Resumen total + escenarios -->
-      <div class="lg:col-span-4 card-surface p-6 sm:p-8 flex flex-col reveal">
-        <div class="eyebrow">Total temporada</div>
-        <div id="totalRevenue" class="font-display text-5xl sm:text-6xl mt-3 text-club-gold leading-none">0 €</div>
-        <div class="mt-2 text-club-ink/60 text-sm">Suma de los 3 eventos × 12 jornadas</div>
-
-        <div class="mt-8 space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="flex items-center gap-2 text-sm">
-              <span class="w-2 h-2 rounded-full bg-fem-burdeos"></span>
-              Liga Femenina
-            </span>
-            <span id="femTotal" class="font-display text-lg text-club-ink">0 €</span>
-          </div>
-          <div class="flex items-center justify-between">
-            <span class="flex items-center gap-2 text-sm">
-              <span class="w-2 h-2 rounded-full bg-prince-gold"></span>
-              Prince Padel Cup
-            </span>
-            <span id="princeTotal" class="font-display text-lg text-club-ink">0 €</span>
-          </div>
-          <div class="flex items-center justify-between">
-            <span class="flex items-center gap-2 text-sm">
-              <span class="w-2 h-2 rounded-full bg-mixto-court"></span>
-              Ranking Mixto
-            </span>
-            <span id="mixtoTotal" class="font-display text-lg text-club-ink">0 €</span>
-          </div>
-        </div>
-
-        <div class="mt-auto pt-8">
-          <div class="eyebrow mb-3">Aplicar escenario</div>
-          <div class="flex flex-wrap gap-2">
-            <button data-scenario="pesimista" class="px-4 py-2 rounded-full border border-club-ink/20 text-sm hover:border-club-gold hover:text-club-gold transition">Pesimista</button>
-            <button data-scenario="realista" class="px-4 py-2 rounded-full border border-club-gold bg-club-gold/10 text-club-gold text-sm">Realista</button>
-            <button data-scenario="optimista" class="px-4 py-2 rounded-full border border-club-ink/20 text-sm hover:border-club-gold hover:text-club-gold transition">Optimista</button>
-          </div>
-          <p class="text-club-ink/40 text-xs mt-4">Coste de inversión para el club: <span class="text-club-ink/70 font-semibold">0 €</span>. Los participantes financian el evento completo.</p>
-        </div>
-      </div>
-
-      <!-- Sliders por evento -->
-      <div class="lg:col-span-8 grid sm:grid-cols-3 gap-5">
-        <!-- Liga Femenina -->
-        <div class="card-surface p-5 sm:p-6 border-fem-burdeos/30 reveal">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="w-2.5 h-2.5 rounded-full bg-fem-burdeos"></span>
-            <div class="font-display uppercase tracking-wider">Femenina</div>
-          </div>
-          <div data-control="femaleTeams">
-            <div class="flex justify-between text-xs text-club-ink/60 mb-1.5">
-              <span>{ranges.femaleTeams.label}</span>
-              <span class="font-mono text-club-ink"><span data-output>0</span></span>
-            </div>
-            <input type="range" class="range-club w-full" min={ranges.femaleTeams.min} max={ranges.femaleTeams.max} step={ranges.femaleTeams.step} value={realista.femaleTeams} />
-          </div>
-          <div data-control="femMatchFee" class="mt-4">
-            <div class="flex justify-between text-xs text-club-ink/60 mb-1.5">
-              <span>Precio / partido</span>
-              <span class="font-mono text-club-ink"><span data-output>0</span> €</span>
-            </div>
-            <input type="range" class="range-club w-full" min={ranges.femMatchFee.min} max={ranges.femMatchFee.max} step={ranges.femMatchFee.step} value={realista.femMatchFee} />
-          </div>
-          <div data-control="femInscription" class="mt-4">
-            <div class="flex justify-between text-xs text-club-ink/60 mb-1.5">
-              <span>Inscripción liga</span>
-              <span class="font-mono text-club-ink"><span data-output>0</span> €</span>
-            </div>
-            <input type="range" class="range-club w-full" min={ranges.femInscription.min} max={ranges.femInscription.max} step={ranges.femInscription.step} value={realista.femInscription} />
-          </div>
-          <div class="mt-5 pt-4 border-t border-club-ink/10 text-xs text-club-ink/60">
-            <div class="flex justify-between"><span>Ingreso / jornada</span><span id="femPerRound" class="font-mono text-club-ink">0 €</span></div>
-            <div class="flex justify-between mt-1"><span>× 6 jornadas</span><span id="femSeason" class="font-mono text-fem-rosa font-bold">0 €</span></div>
-          </div>
-        </div>
-
-        <!-- Prince Padel Cup -->
-        <div class="card-surface p-5 sm:p-6 border-prince-gold/30 reveal">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="w-2.5 h-2.5 rounded-full bg-prince-gold"></span>
-            <div class="font-display uppercase tracking-wider">Prince Cup</div>
-          </div>
-          <div data-control="princeKids">
-            <div class="flex justify-between text-xs text-club-ink/60 mb-1.5">
-              <span>{ranges.princeKids.label}</span>
-              <span class="font-mono text-club-ink"><span data-output>0</span></span>
-            </div>
-            <input type="range" class="range-club w-full" min={ranges.princeKids.min} max={ranges.princeKids.max} step={ranges.princeKids.step} value={realista.princeKids} />
-          </div>
-          <div data-control="princeMatchFee" class="mt-4">
-            <div class="flex justify-between text-xs text-club-ink/60 mb-1.5">
-              <span>Precio / partido</span>
-              <span class="font-mono text-club-ink"><span data-output>0</span> €</span>
-            </div>
-            <input type="range" class="range-club w-full" min={ranges.princeMatchFee.min} max={ranges.princeMatchFee.max} step={ranges.princeMatchFee.step} value={realista.princeMatchFee} />
-          </div>
-          <div data-control="princeInscription" class="mt-4">
-            <div class="flex justify-between text-xs text-club-ink/60 mb-1.5">
-              <span>Inscripción copa</span>
-              <span class="font-mono text-club-ink"><span data-output>0</span> €</span>
-            </div>
-            <input type="range" class="range-club w-full" min={ranges.princeInscription.min} max={ranges.princeInscription.max} step={ranges.princeInscription.step} value={realista.princeInscription} />
-          </div>
-          <div class="mt-5 pt-4 border-t border-club-ink/10 text-xs text-club-ink/60">
-            <div class="flex justify-between"><span>Ingreso / jornada</span><span id="princePerRound" class="font-mono text-club-ink">0 €</span></div>
-            <div class="flex justify-between mt-1"><span>× 6 jornadas</span><span id="princeSeason" class="font-mono text-prince-gold font-bold">0 €</span></div>
-          </div>
-        </div>
-
-        <!-- Ranking Mixto -->
-        <div class="card-surface p-5 sm:p-6 border-mixto-court/30 reveal">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="w-2.5 h-2.5 rounded-full bg-mixto-court"></span>
-            <div class="font-display uppercase tracking-wider">Mixto</div>
-          </div>
-          <div data-control="mixedPlayers">
-            <div class="flex justify-between text-xs text-club-ink/60 mb-1.5">
-              <span>{ranges.mixedPlayers.label}</span>
-              <span class="font-mono text-club-ink"><span data-output>0</span></span>
-            </div>
-            <input type="range" class="range-club w-full" min={ranges.mixedPlayers.min} max={ranges.mixedPlayers.max} step={ranges.mixedPlayers.step} value={realista.mixedPlayers} />
-          </div>
-          <div data-control="mixedFee" class="mt-4">
-            <div class="flex justify-between text-xs text-club-ink/60 mb-1.5">
-              <span>{ranges.mixedFee.label}</span>
-              <span class="font-mono text-club-ink"><span data-output>0</span> €</span>
-            </div>
-            <input type="range" class="range-club w-full" min={ranges.mixedFee.min} max={ranges.mixedFee.max} step={ranges.mixedFee.step} value={realista.mixedFee} />
-          </div>
-          <div class="mt-5 pt-4 border-t border-club-ink/10 text-xs text-club-ink/60">
-            <div class="flex justify-between"><span>Ingreso / jornada</span><span id="mixedPerRound" class="font-mono text-club-ink">0 €</span></div>
-            <div class="flex justify-between mt-1"><span>× 12 jornadas</span><span id="mixedSeason" class="font-mono text-mixto-court font-bold">0 €</span></div>
-            <div class="mt-3 text-club-ink/50 text-[10px] uppercase tracking-wider">La máquina recurrente</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    )}
+    <!-- CALCULADORA DE INGRESOS: aislada en su propio componente.
+         Solo se renderiza (y solo entonces su JS llega al navegador) si SHOW_FINANCIALS. -->
+    {SHOW_FINANCIALS && <RevenueCalculator />}
   </div>
 </section>
 
 <script>
   import { gsap } from "gsap";
-  import { scenarios, computeRevenue, formatEuro } from "../scripts/revenue";
 
-  const controls = Array.from(document.querySelectorAll<HTMLElement>("[data-control]"));
-  const inputs = new Map<string, HTMLInputElement>();
-  const outputs = new Map<string, HTMLElement>();
+  // Formateador local: evita importar revenue.ts (datos sensibles) en el bundle público.
+  const formatEuro = (n: number) =>
+    new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
 
-  controls.forEach((ctrl) => {
-    const key = ctrl.dataset.control as string;
-    const input = ctrl.querySelector<HTMLInputElement>("input[type='range']");
-    const output = ctrl.querySelector<HTMLElement>("[data-output]");
-    if (input && output) {
-      inputs.set(key, input);
-      outputs.set(key, output);
-    }
-  });
-
-  function readState() {
-    const s: any = {};
-    inputs.forEach((input, key) => { s[key] = Number(input.value); });
-    return s;
-  }
-
-  function setEl(id: string, value: string) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = value;
-  }
-
-  function recalc() {
-    const s = readState();
-    outputs.forEach((out, key) => { out.textContent = String(s[key]); });
-    const r = computeRevenue(s);
-    setEl("femPerRound", formatEuro(r.femPerRound));
-    setEl("femSeason", formatEuro(r.fem));
-    setEl("femTotal", formatEuro(r.fem));
-    setEl("princePerRound", formatEuro(r.princePerRound));
-    setEl("princeSeason", formatEuro(r.prince));
-    setEl("princeTotal", formatEuro(r.prince));
-    setEl("mixedPerRound", formatEuro(r.mixedPerRound));
-    setEl("mixedSeason", formatEuro(r.mixed));
-    setEl("mixtoTotal", formatEuro(r.mixed));
-    setEl("totalRevenue", formatEuro(r.total));
-  }
-
-  inputs.forEach((input) => input.addEventListener("input", recalc));
-
-  document.querySelectorAll<HTMLButtonElement>("[data-scenario]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const key = btn.dataset.scenario as keyof typeof scenarios;
-      const sc = scenarios[key];
-      Object.entries(sc).forEach(([k, v]) => {
-        const input = inputs.get(k);
-        if (input && typeof v === "number") input.value = String(v);
-      });
-      document.querySelectorAll<HTMLButtonElement>("[data-scenario]").forEach((b) => {
-        b.classList.remove("border-club-gold", "bg-club-gold/10", "text-club-gold");
-        b.classList.add("border-club-ink/20");
-      });
-      btn.classList.add("border-club-gold", "bg-club-gold/10", "text-club-gold");
-      btn.classList.remove("border-club-ink/20");
-      recalc();
-    });
-  });
-
-  recalc();
-
-  // Animated counters
+  // Contadores animados (jornadas, horas-pista, jugadores nuevos y, si procede, ingresos).
   const counters = document.querySelectorAll<HTMLElement>("[data-counter]");
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
