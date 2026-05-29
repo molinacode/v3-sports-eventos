@@ -1,0 +1,64 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  themeClass?: string;
+}
+
+const {
+  title = "V3 Sports Eventos · Temporada 2026/27",
+  description = "Tres eventos. Una temporada. Liga Femenina, Prince Padel Cup y Ranking Mixto.",
+  themeClass = "",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class={themeClass}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0E1410" />
+    <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
+    <link rel="alternate icon" type="image/png" href="/img/v3-ball.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot name="nav" />
+    <slot />
+    <slot name="footer" />
+
+    <script>
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              io.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "f" || e.key === "F") {
+          if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+          else document.exitFullscreen();
+        }
+      });
+    </script>
+  </body>
+</html>

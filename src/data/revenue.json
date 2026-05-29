@@ -1,0 +1,28 @@
+{
+  "_comment": "Valores razonables como punto de partida. Edita aquí para la presentación al club.",
+  "scenarios": {
+    "pesimista": { "label": "Pesimista", "femaleTeams": 6, "femMatchFee": 6, "femInscription": 20, "princeKids": 16, "princeMatchFee": 5, "princeInscription": 25, "mixedPlayers": 12, "mixedFee": 13 },
+    "realista":  { "label": "Realista",  "femaleTeams": 10, "femMatchFee": 7, "femInscription": 25, "princeKids": 24, "princeMatchFee": 6, "princeInscription": 30, "mixedPlayers": 16, "mixedFee": 13 },
+    "optimista": { "label": "Optimista", "femaleTeams": 14, "femMatchFee": 8, "femInscription": 30, "princeKids": 32, "princeMatchFee": 7, "princeInscription": 35, "mixedPlayers": 20, "mixedFee": 13 }
+  },
+  "rounds": {
+    "femaleRounds": 6,
+    "princeRounds": 6,
+    "mixedRounds": 12
+  },
+  "ranges": {
+    "femaleTeams":     { "min": 4,  "max": 20, "step": 1, "label": "Parejas femeninas inscritas" },
+    "femMatchFee":     { "min": 4,  "max": 12, "step": 1, "label": "Precio por partido (€)" },
+    "femInscription":  { "min": 0,  "max": 50, "step": 5, "label": "Inscripción a la liga (€)" },
+    "princeKids":      { "min": 8,  "max": 40, "step": 2, "label": "Niños/as inscritos" },
+    "princeMatchFee":  { "min": 3,  "max": 10, "step": 1, "label": "Precio por partido (€)" },
+    "princeInscription": { "min": 0, "max": 50, "step": 5, "label": "Inscripción a la copa (€)" },
+    "mixedPlayers":    { "min": 8,  "max": 32, "step": 1, "label": "Jugadores/as por jornada" },
+    "mixedFee":        { "min": 8,  "max": 20, "step": 1, "label": "Cuota por jornada (€)" }
+  },
+  "extraKPIs": {
+    "occupancyHoursPerSeason": 340,
+    "newPlayersExpected": 35,
+    "socialReach": "viralidad estimada en redes (cartas Prince)"
+  }
+}

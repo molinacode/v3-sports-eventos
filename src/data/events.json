@@ -1,0 +1,108 @@
+{
+  "season": "2026 / 2027",
+  "club": {
+    "name": "V3 Sports Eventos",
+    "tagline": "Tres eventos. Una temporada. Tu club.",
+    "rankingUrl": "https://xporty.com/"
+  },
+  "events": [
+    {
+      "id": "liga-femenina",
+      "slug": "liga-femenina",
+      "name": "Liga Femenina",
+      "subtitle": "Nivel iniciación · Orientación social",
+      "theme": "fem",
+      "color": "#8B1538",
+      "accent": "#C9A658",
+      "audience": "Mujeres del club y nuevas socias",
+      "format": [
+        "4 partidos de 30' por jornada",
+        "Punto de oro en todos los juegos",
+        "Mínimo 3-4 pistas activas",
+        "Sorteo de parejas al inicio de cada jornada"
+      ],
+      "scoring": {
+        "victoria": 3,
+        "empate": 2,
+        "derrota": 1
+      },
+      "frequency": "Cada 6 semanas (trimestral)",
+      "season": "Septiembre - Mayo",
+      "prizes": [
+        { "title": "Campeonas de Liga", "desc": "Las dos primeras del ranking final", "icon": "trophy" },
+        { "title": "Premio Puntualidad", "desc": "La pareja con mejor récord de puntualidad", "icon": "clock" },
+        { "title": "Outfit más Original", "desc": "Votado entre todas las jugadoras", "icon": "sparkles" },
+        { "title": "Premio Fair-Play", "desc": "Decidido por consenso del grupo", "icon": "heart" },
+        { "title": "Sorteo de Jornada", "desc": "Material y servicios del club en cada jornada", "icon": "gift" }
+      ],
+      "pricing": "Precio a negociar con el club (inscripción + cuota por partido)",
+      "headline": "Capta nuevas socias. Fideliza a las actuales.",
+      "pitch": "Liga social no competitiva que llena pistas en horas valle y consolida a las jugadoras del club. Punto de partida ideal para mujeres que quieren iniciarse en la competición sin presión."
+    },
+    {
+      "id": "prince-padel-cup",
+      "slug": "prince-padel-cup",
+      "name": "Prince Padel Cup",
+      "subtitle": "Liga infantil · 10-16 años · No federados",
+      "theme": "prince",
+      "color": "#0A0A0A",
+      "accent": "#FFD23F",
+      "audience": "Jóvenes 10-16 años no federados",
+      "format": [
+        "2-3 partidos de 45' por jornada",
+        "Cartas especiales tipo King League",
+        "Una carta aleatoria por partido",
+        "Mínimo 3 pistas activas"
+      ],
+      "scoring": {
+        "victoria": 3,
+        "empate": 2,
+        "derrota": 1
+      },
+      "frequency": "Cada 6 semanas (alterna con Liga Femenina, desfase de 3 semanas)",
+      "season": "Copa Otoño (Sep - Dic) · Copa Primavera (Ene - May)",
+      "cups": [
+        { "name": "Copa Otoño", "period": "Septiembre - Diciembre" },
+        { "name": "Copa Primavera", "period": "Enero - Mayo" }
+      ],
+      "prizes": [
+        { "title": "Ganadores Copa Otoño", "desc": "Trofeo + material deportivo", "icon": "trophy" },
+        { "title": "Ganadores Copa Primavera", "desc": "Trofeo + material deportivo", "icon": "trophy" },
+        { "title": "Mejor Jugada de la Liga", "desc": "Premio a la jugada más espectacular", "icon": "flame" },
+        { "title": "Premio Compañerismo", "desc": "Votado entre los equipos", "icon": "users" }
+      ],
+      "pricing": "Precio a negociar con el club",
+      "headline": "Familias jóvenes hoy. Cuotas de socio mañana.",
+      "pitch": "Liga social de iniciación a la competición con un giro innovador: cartas King League que cada partido se sacan al azar. Engancha a los niños, divierte a los padres y genera contenido viral en redes sociales: marketing gratuito para el club."
+    },
+    {
+      "id": "ranking-mixto",
+      "slug": "ranking-mixto",
+      "name": "Ranking Mixto",
+      "subtitle": "Nivel medio · Mixto · Pozo",
+      "theme": "mixto",
+      "color": "#0F1B3D",
+      "accent": "#C6FF3D",
+      "audience": "Jugadores y jugadoras del club, nivel medio-bajo / medio-alto",
+      "format": [
+        "Partidos tipo pozo de 15-20'",
+        "Cambio de pista y compañero cada partido",
+        "Mínimo 4 pistas activas",
+        "Apuntarse jornada a jornada, sin compromiso"
+      ],
+      "scoring": {
+        "rule": "Puntos según la pista final de la jornada"
+      },
+      "frequency": "Cada 3 semanas",
+      "season": "Septiembre - Mayo",
+      "pricing": "Precio a negociar con el club",
+      "prizes": [
+        { "title": "Top 3 Temporada", "desc": "Premios al finalizar mayo", "icon": "trophy" },
+        { "title": "Premio Asistencia", "desc": "Jugadores con más jornadas disputadas", "icon": "calendar" },
+        { "title": "Sorteo Final", "desc": "Entre todos los participantes de la temporada", "icon": "gift" }
+      ],
+      "headline": "La máquina de ingresos recurrentes del club.",
+      "pitch": "12 jornadas garantizadas. Sin compromiso de inscripción, los jugadores se apuntan cuando quieren. Coincide con cada jornada de Liga Femenina e Infantil, llenando las pistas de forma sistemática cada 3 semanas."
+    }
+  ]
+}

@@ -1,0 +1,556 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import PrinceCard from "../../components/PrinceCard.astro";
+import PrizeIcon from "../../components/PrizeIcon.astro";
+import eventsData from "../../data/events.json";
+import cardsData from "../../data/cards.json";
+import calendarData from "../../data/calendar.json";
+
+const ev = eventsData.events.find((e) => e.slug === "prince-padel-cup")!;
+const cards = cardsData.cards;
+const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+const rounds = calendarData.rounds.filter((r) => r.events.includes("prince-padel-cup"));
+const autumnRounds = rounds.filter((r) => new Date(r.date) < new Date("2027-01-01"));
+const springRounds = rounds.filter((r) => new Date(r.date) >= new Date("2027-01-01"));
+---
+
+<BaseLayout title={`${ev.name} · V3 Sports Eventos`} description={ev.headline} themeClass="theme-prince">
+  <Nav slot="nav" />
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-prince-bg"></div>
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute inset-0" style="background: radial-gradient(circle at 20% 0%, rgba(255,210,63,0.18) 0%, transparent 50%), radial-gradient(circle at 80% 100%, rgba(255,46,99,0.15) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(0,229,255,0.08) 0%, transparent 60%);"></div>
+      <div class="absolute inset-0 bg-noise opacity-[0.08] mix-blend-overlay"></div>
+    </div>
+
+    <div class="container-padel pt-12 sm:pt-20 pb-20 text-white">
+      <a href="/" class="inline-flex items-center gap-2 text-prince-gold/80 hover:text-prince-gold text-sm mb-8">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        Volver al programa
+      </a>
+
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7">
+          <div class="flex items-center gap-3">
+            <span class="font-display tracking-[0.3em] text-xs text-prince-electric">Evento 02 · {ev.subtitle}</span>
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-prince-bg bg-prince-gold px-2 py-0.5 rounded-full">King League</span>
+          </div>
+          <h1 class="font-gaming text-[18vw] sm:text-[14vw] lg:text-[12rem] mt-4 leading-[0.85] reveal" style="background: linear-gradient(135deg, #FFD23F 0%, #FF2E63 50%, #00E5FF 100%); -webkit-background-clip: text; background-clip: text; color: transparent;">
+            PRINCE<br/>PADEL CUP
+          </h1>
+          <p class="font-display italic text-prince-gold text-2xl sm:text-3xl mt-4 reveal">{ev.headline}</p>
+          <p class="mt-6 text-white/80 max-w-xl reveal">{ev.pitch}</p>
+
+          <div class="mt-8 flex flex-wrap gap-3 reveal">
+            <button id="drawCardBtn" class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-prince-bg bg-prince-gold hover:scale-[1.03] active:scale-[0.97] transition-transform">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3v18M3 12h18"/></svg>
+              SACAR CARTA ALEATORIA
+            </button>
+            <a href="#cartas" class="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/30 text-white hover:border-prince-gold hover:text-prince-gold transition">
+              Ver las 8 cartas
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 flex justify-center reveal">
+          <div class="relative">
+            <div class="absolute -inset-8 blur-3xl opacity-40 rounded-full" style="background: radial-gradient(circle, #FFD23F 0%, transparent 70%);"></div>
+            <div class="relative -rotate-[8deg] hover:rotate-0 transition-transform duration-500">
+              <PrinceCard card={cards[2]} size="lg" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALOR PARA EL CLUB -->
+  <section class="container-padel py-20 text-white">
+    <div class="grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-5 reveal">
+        <div class="eyebrow text-prince-electric">Para el club</div>
+        <h2 class="title-display text-4xl sm:text-5xl mt-3">Familias jóvenes.<br/><span class="text-prince-gold">Cuotas futuras.</span></h2>
+        <p class="mt-4 text-white/70">El segmento 10-16 años es la cantera de cuotas familiares. Engancha a los niños con un formato innovador, los padres se sientan a verlo, y el club genera contenido viral en redes.</p>
+      </div>
+      <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4 reveal">
+        <div class="card-surface p-6 border-l-4 border-prince-gold">
+          <div class="font-display text-3xl text-prince-gold">+</div>
+          <div class="mt-2 font-semibold">Captación de familias</div>
+          <p class="text-white/60 text-sm mt-1">Cada niño viene con sus padres. Conversión a cuota familiar a futuro.</p>
+        </div>
+        <div class="card-surface p-6 border-l-4 border-prince-electric">
+          <div class="font-display text-3xl text-prince-electric">+</div>
+          <div class="mt-2 font-semibold">Viralidad en redes</div>
+          <p class="text-white/60 text-sm mt-1">Cartas King League generan contenido. Marketing gratuito en Instagram y TikTok.</p>
+        </div>
+        <div class="card-surface p-6 border-l-4 border-prince-crown">
+          <div class="font-display text-3xl text-prince-crown">+</div>
+          <div class="mt-2 font-semibold">Diferenciación local</div>
+          <p class="text-white/60 text-sm mt-1">Único club de la zona con liga infantil tipo King League. Prensa local garantizada.</p>
+        </div>
+        <div class="card-surface p-6 border-l-4 border-prince-gold">
+          <div class="font-display text-3xl text-prince-gold">+</div>
+          <div class="mt-2 font-semibold">Coste cero</div>
+          <p class="text-white/60 text-sm mt-1">Las inscripciones cubren todo. Material publicitario, vídeo viral, ranking, premios.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAS CARTAS -->
+  <section id="cartas" class="py-20 border-t border-white/10">
+    <div class="container-padel">
+      <div class="text-center mb-12 reveal">
+        <div class="eyebrow text-prince-electric">{cardsData.deckName}</div>
+        <h2 class="font-gaming text-6xl sm:text-8xl mt-3 text-white tracking-wider">8 CARTAS · 1 PARTIDO</h2>
+        <p class="text-white/70 max-w-2xl mx-auto mt-5">{cardsData.subtitle}. Al inicio de cada partido se saca una carta al azar. Solo aplica para ese partido. <span class="text-prince-gold">Toca cualquier carta para girarla.</span></p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-6 sm:gap-7">
+        {cards.map((card, idx) => (
+          <PrinceCard card={card} index={idx} size="md" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDARIO -->
+  <section class="container-padel py-20">
+    <div class="grid lg:grid-cols-2 gap-6">
+      <!-- Otoño -->
+      <div class="rounded-3xl p-8 sm:p-10 border border-prince-gold/30 bg-gradient-to-br from-[#1a1208] to-prince-bg reveal">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="font-display tracking-[0.3em] text-xs text-prince-gold">Copa Otoño</div>
+            <h3 class="font-gaming text-4xl sm:text-5xl mt-2 text-white">SEP — DIC</h3>
+          </div>
+          <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-prince-bg bg-prince-gold px-2.5 py-1 rounded-full">3 jornadas</span>
+        </div>
+        <div class="mt-6 grid grid-cols-3 gap-3">
+          {autumnRounds.map((r) => {
+            const d = new Date(r.date + "T00:00:00");
+            return (
+              <div class="rounded-xl bg-white/5 border border-white/10 p-4 text-center">
+                <div class="text-[10px] uppercase tracking-widest text-prince-electric">J{String(r.n).padStart(2, "0")}</div>
+                <div class="font-display text-3xl mt-1 text-white">{String(d.getDate()).padStart(2, "0")}</div>
+                <div class="text-xs text-white/60 uppercase">{months[d.getMonth()]} {d.getFullYear()}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <!-- Primavera -->
+      <div class="rounded-3xl p-8 sm:p-10 border border-prince-electric/30 bg-gradient-to-br from-[#031a1f] to-prince-bg reveal">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="font-display tracking-[0.3em] text-xs text-prince-electric">Copa Primavera</div>
+            <h3 class="font-gaming text-4xl sm:text-5xl mt-2 text-white">ENE — MAY</h3>
+          </div>
+          <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-prince-bg bg-prince-electric px-2.5 py-1 rounded-full">3 jornadas</span>
+        </div>
+        <div class="mt-6 grid grid-cols-3 gap-3">
+          {springRounds.map((r) => {
+            const d = new Date(r.date + "T00:00:00");
+            return (
+              <div class="rounded-xl bg-white/5 border border-white/10 p-4 text-center">
+                <div class="text-[10px] uppercase tracking-widest text-prince-gold">J{String(r.n).padStart(2, "0")}</div>
+                <div class="font-display text-3xl mt-1 text-white">{String(d.getDate()).padStart(2, "0")}</div>
+                <div class="text-xs text-white/60 uppercase">{months[d.getMonth()]} {d.getFullYear()}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMATO + PUNTUACIÓN -->
+  <section class="container-padel py-20 grid lg:grid-cols-12 gap-10 text-white">
+    <div class="lg:col-span-6 reveal">
+      <div class="eyebrow text-prince-electric">Formato</div>
+      <h2 class="title-display text-4xl sm:text-5xl mt-3">2-3 partidos.<br/>45 minutos.</h2>
+      <ul class="mt-8 space-y-3">
+        {ev.format.map((f) => (
+          <li class="flex items-start gap-3 pb-3 border-b border-white/10">
+            <span class="font-display text-prince-gold text-2xl leading-none">·</span>
+            <span class="text-white/85">{f}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="lg:col-span-6 reveal">
+      <div class="eyebrow text-prince-electric">Puntuación</div>
+      <h2 class="title-display text-4xl sm:text-5xl mt-3">Ranking <span class="text-prince-gold">único.</span></h2>
+      <div class="mt-8 grid grid-cols-3 gap-3">
+        <div class="rounded-2xl bg-gradient-to-br from-prince-gold to-[#FF8800] text-prince-bg p-6 text-center">
+          <div class="text-xs uppercase tracking-widest opacity-70">Victoria</div>
+          <div class="font-gaming text-7xl mt-2">{ev.scoring.victoria}</div>
+        </div>
+        <div class="rounded-2xl bg-white/10 border border-white/20 p-6 text-center">
+          <div class="text-xs uppercase tracking-widest opacity-70">Empate</div>
+          <div class="font-gaming text-7xl mt-2">{ev.scoring.empate}</div>
+        </div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-6 text-center">
+          <div class="text-xs uppercase tracking-widest opacity-70">Derrota</div>
+          <div class="font-gaming text-7xl mt-2">{ev.scoring.derrota}</div>
+        </div>
+      </div>
+      <p class="mt-6 text-white/70">10-16 años, no federados. Liga social de iniciación a la competición.</p>
+    </div>
+  </section>
+
+  <!-- PREMIOS -->
+  <section class="container-padel py-20">
+    <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+      <div class="eyebrow text-prince-electric">Premios al cierre de cada copa</div>
+      <h2 class="title-display text-4xl sm:text-6xl mt-3 text-white">Trofeos y <span class="text-prince-gold">leyenda.</span></h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {ev.prizes.map((p) => (
+        <div class="reveal card-surface p-6 hover-lift relative overflow-hidden group">
+          <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl opacity-25 group-hover:opacity-50 transition" style="background: radial-gradient(circle, #FFD23F 0%, transparent 70%);"></div>
+          <div class="relative">
+            <div class="w-14 h-14 rounded-full bg-prince-gold/10 border border-prince-gold/30 flex items-center justify-center">
+              <PrizeIcon name={p.icon} color="#FFD23F" />
+            </div>
+            <div class="font-display uppercase text-xl mt-5 text-white">{p.title}</div>
+            <p class="text-white/70 mt-2 text-sm">{p.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container-padel pb-20">
+    <div class="rounded-3xl p-8 sm:p-12 bg-gradient-to-br from-prince-crown to-prince-bg border border-white/10 reveal">
+      <div class="grid lg:grid-cols-12 gap-8 items-center text-white">
+        <div class="lg:col-span-7">
+          <h3 class="font-gaming text-4xl sm:text-5xl">¿LISTO PARA REINAR?</h3>
+          <p class="mt-3 text-white/80 max-w-xl">Precio a negociar con el club. Las cartas, el ranking y la viralidad en redes están listos.</p>
+        </div>
+        <div class="lg:col-span-5 flex flex-wrap gap-3 lg:justify-end">
+          <a href={eventsData.club.rankingUrl} target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-prince-gold text-prince-bg font-bold hover:scale-[1.02] transition">Clasificación en xporty</a>
+          <a href="/#calendario" class="btn-ghost">Ver calendario</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL "SACAR CARTA" -->
+  <div id="cardModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" aria-hidden="true">
+    <div id="cardModalBackdrop" class="absolute inset-0 bg-black/85 backdrop-blur-md"></div>
+    <div class="relative w-full max-w-2xl">
+      <button id="cardModalClose" class="absolute -top-12 right-0 text-white/70 hover:text-white inline-flex items-center gap-2">
+        Cerrar <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6l-6 12"/></svg>
+      </button>
+      <button id="sfxToggle" class="absolute -top-12 left-0 text-white/70 hover:text-prince-gold inline-flex items-center gap-2" aria-label="Activar o silenciar sonido">
+        <span id="sfxIcon"></span>
+        <span id="sfxLabel" class="text-sm"></span>
+      </button>
+      <div class="text-center mb-6">
+        <div class="eyebrow text-prince-electric" id="modalSubtitle">Barajando el mazo...</div>
+        <div class="font-gaming text-4xl sm:text-5xl mt-2 text-white" id="modalTitle">Tu carta para este partido</div>
+      </div>
+      <div id="drawArea" class="flex justify-center items-center min-h-[28rem]"></div>
+      <div class="text-center mt-6">
+        <button id="drawAgain" class="hidden btn-primary mx-auto">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 12a9 9 0 0 1-15 6.7L3 16M21 3v5h-5M3 21v-5h5"/></svg>
+          Sacar otra carta
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import { gsap } from "gsap";
+    import cardsJson from "../../data/cards.json";
+
+    // ---- Motor de sonido (Web Audio, sin archivos) ----
+    const Sfx = (() => {
+      let ctx: AudioContext | null = null;
+      let muted = localStorage.getItem("princeSfxMuted") === "1";
+      const ensure = () => {
+        if (!ctx) ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        if (ctx.state === "suspended") ctx.resume();
+        return ctx;
+      };
+      const noise = (ac: AudioContext, dur: number) => {
+        const len = Math.max(1, Math.floor(ac.sampleRate * dur));
+        const buf = ac.createBuffer(1, len, ac.sampleRate);
+        const d = buf.getChannelData(0);
+        for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+        return buf;
+      };
+      const tone = (ac: AudioContext, freq: number, start: number, dur: number, peak: number, type: OscillatorType = "triangle") => {
+        const o = ac.createOscillator();
+        const g = ac.createGain();
+        o.type = type;
+        o.frequency.value = freq;
+        g.gain.setValueAtTime(0.0001, start);
+        g.gain.exponentialRampToValueAtTime(peak, start + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+        o.connect(g).connect(ac.destination);
+        o.start(start);
+        o.stop(start + dur);
+      };
+      // Swish de barajado: ruido filtrado con barrido de frecuencia
+      const whoosh = (intensity = 1) => {
+        if (muted) return;
+        const ac = ensure();
+        const t = ac.currentTime;
+        const dur = 0.3;
+        const src = ac.createBufferSource();
+        src.buffer = noise(ac, dur);
+        const bp = ac.createBiquadFilter();
+        bp.type = "bandpass";
+        bp.Q.value = 0.9;
+        bp.frequency.setValueAtTime(700, t);
+        bp.frequency.exponentialRampToValueAtTime(2400 * intensity, t + dur * 0.55);
+        bp.frequency.exponentialRampToValueAtTime(500, t + dur);
+        const g = ac.createGain();
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(0.22 * intensity, t + 0.05);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        src.connect(bp).connect(g).connect(ac.destination);
+        src.start(t);
+        src.stop(t + dur);
+      };
+      // Clic seco al girar una carta
+      const flip = () => {
+        if (muted) return;
+        const ac = ensure();
+        const t = ac.currentTime;
+        const dur = 0.11;
+        const src = ac.createBufferSource();
+        src.buffer = noise(ac, dur);
+        const hp = ac.createBiquadFilter();
+        hp.type = "highpass";
+        hp.frequency.value = 1800;
+        const g = ac.createGain();
+        g.gain.setValueAtTime(0.16, t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        src.connect(hp).connect(g).connect(ac.destination);
+        src.start(t);
+        src.stop(t + dur);
+        tone(ac, 320, t, 0.08, 0.06, "square");
+      };
+      // Repique de revelado: arpegio que crece con la rareza
+      const reveal = (rarity = 1) => {
+        if (muted) return;
+        const ac = ensure();
+        const t = ac.currentTime;
+        tone(ac, 130, t, 0.28, 0.18, "sine");
+        const base = [523.25, 659.25, 783.99, 1046.5];
+        const notes = base.slice(0, Math.min(4, 1 + rarity));
+        notes.forEach((f, i) => tone(ac, f, t + i * 0.06, 0.55, 0.16, "triangle"));
+        if (rarity >= 3) {
+          [1568, 2093, 2637].forEach((f, i) => tone(ac, f, t + 0.2 + i * 0.05, 0.45, 0.07, "sine"));
+        }
+      };
+      // Golpe de sello al estampar el logo
+      const stamp = () => {
+        if (muted) return;
+        const ac = ensure();
+        const t = ac.currentTime;
+        tone(ac, 88, t, 0.2, 0.26, "sine");
+        const src = ac.createBufferSource();
+        src.buffer = noise(ac, 0.06);
+        const hp = ac.createBiquadFilter();
+        hp.type = "highpass";
+        hp.frequency.value = 2600;
+        const g = ac.createGain();
+        g.gain.setValueAtTime(0.14, t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+        src.connect(hp).connect(g).connect(ac.destination);
+        src.start(t);
+        src.stop(t + 0.06);
+      };
+      return {
+        whoosh,
+        flip,
+        reveal,
+        stamp,
+        deal: () => whoosh(0.7),
+        resume: () => ensure(),
+        setMuted: (m: boolean) => { muted = m; localStorage.setItem("princeSfxMuted", m ? "1" : "0"); },
+        isMuted: () => muted,
+      };
+    })();
+
+    // Botón de silencio
+    const sfxToggle = document.getElementById("sfxToggle")!;
+    const sfxIcon = document.getElementById("sfxIcon")!;
+    const sfxLabel = document.getElementById("sfxLabel")!;
+    const iconOn = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/></svg>`;
+    const iconOff = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>`;
+    const renderSfx = () => {
+      const off = Sfx.isMuted();
+      sfxIcon.innerHTML = off ? iconOff : iconOn;
+      sfxLabel.textContent = off ? "Sonido off" : "Sonido on";
+    };
+    renderSfx();
+    sfxToggle.addEventListener("click", () => {
+      Sfx.resume();
+      Sfx.setMuted(!Sfx.isMuted());
+      renderSfx();
+      if (!Sfx.isMuted()) Sfx.flip();
+    });
+
+    // Toggle flip al hacer click
+    document.querySelectorAll<HTMLElement>(".prince-card").forEach((el) => {
+      el.addEventListener("click", () => {
+        Sfx.resume();
+        Sfx.flip();
+        el.classList.toggle("is-flipped");
+      });
+    });
+
+    // Modal "Sacar carta aleatoria"
+    const modal = document.getElementById("cardModal")!;
+    const backdrop = document.getElementById("cardModalBackdrop")!;
+    const closeBtn = document.getElementById("cardModalClose")!;
+    const drawBtn = document.getElementById("drawCardBtn")!;
+    const drawAgainBtn = document.getElementById("drawAgain")!;
+    const drawArea = document.getElementById("drawArea")!;
+    const modalSub = document.getElementById("modalSubtitle")!;
+    const modalTitle = document.getElementById("modalTitle")!;
+
+    function openModal() {
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal() {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+
+    closeBtn.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", closeModal);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+    const rarityColors: Record<number, { primary: string; label: string }> = {
+      1: { primary: "#9BC9FF", label: "COMÚN" },
+      2: { primary: "#00E5FF", label: "RARA" },
+      3: { primary: "#FF2E63", label: "ÉPICA" },
+      4: { primary: "#FFD23F", label: "LEGENDARIA" },
+    };
+
+    function buildCardEl(card: any) {
+      const r = rarityColors[card.rarityLevel];
+      const iconHtml = (document.querySelector(`.prince-card[data-card-id="${card.id}"] .card-icon-src svg`) as SVGElement | null)?.outerHTML ?? "";
+      const wrap = document.createElement("div");
+      wrap.innerHTML = `
+        <div class="card-3d w-72 h-[26rem] sm:w-80 sm:h-[28rem] mx-auto" style="--rarity: ${r.primary};">
+          <div class="card-3d-inner w-full h-full rounded-[18px]" style="box-shadow: 0 30px 80px -10px ${r.primary}88;">
+            <div class="card-face card-front holo-bg overflow-hidden">
+              <div class="absolute inset-0 rounded-[18px] pointer-events-none" style="box-shadow: inset 0 0 0 2px ${r.primary}, inset 0 0 24px rgba(255,255,255,0.1);"></div>
+              <div class="absolute inset-[6px] rounded-[14px] pointer-events-none border border-prince-gold/40"></div>
+              <div class="absolute top-3 left-3 right-3 flex items-center justify-between">
+                <span class="font-display tracking-[0.25em] text-xs px-2 py-1 rounded-md border" style="color: ${r.primary}; border-color: ${r.primary}80; background: ${r.primary}15;">${r.label}</span>
+                <span class="font-display text-prince-gold text-sm tracking-wider">P · ${card.rarityLevel}</span>
+              </div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="relative scale-[2.1]">
+                  <div class="absolute inset-0 blur-2xl opacity-60" style="background: radial-gradient(circle, ${r.primary} 0%, transparent 70%);"></div>
+                  ${iconHtml}
+                </div>
+              </div>
+              <div class="absolute bottom-0 left-0 right-0 p-5 text-center bg-gradient-to-t from-black/90 to-transparent">
+                <div class="font-gaming text-white text-3xl tracking-wider leading-none">${card.name}</div>
+                <div class="text-prince-gold text-xs mt-2 uppercase tracking-wider italic">${card.tagline}</div>
+              </div>
+              <div class="card-seal absolute top-12 right-3 z-20" style="opacity:0;">
+                <div class="relative w-8 h-8 sm:w-9 sm:h-9">
+                  <div class="absolute -inset-1 rounded-full border border-prince-gold/50"></div>
+                  <img src="/img/favicon.svg" alt="V3 Sports" class="w-full h-full drop-shadow-[0_4px_16px_rgba(201,166,88,0.7)]" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="text-white/85 text-center mt-5 max-w-md mx-auto">${card.description}</p>
+      `;
+      return wrap;
+    }
+
+    function drawRandom() {
+      const cards = cardsJson.cards;
+      drawArea.innerHTML = "";
+
+      // Decoy: render 5 mini cartas que se barajan
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      modalSub.textContent = "Barajando el mazo...";
+      modalTitle.textContent = "...";
+
+      if (reduced) {
+        const picked = cards[Math.floor(Math.random() * cards.length)];
+        const el = buildCardEl(picked);
+        const seal = el.querySelector<HTMLElement>(".card-seal");
+        if (seal) seal.style.opacity = "1";
+        drawArea.appendChild(el);
+        modalSub.textContent = `${rarityColors[picked.rarityLevel].label} · CARTA SACADA`;
+        modalTitle.textContent = picked.name;
+        drawAgainBtn.classList.remove("hidden");
+        Sfx.reveal(picked.rarityLevel);
+        return;
+      }
+
+      const stage = document.createElement("div");
+      stage.className = "relative w-72 h-[26rem] sm:w-80 sm:h-[28rem]";
+      drawArea.appendChild(stage);
+
+      const minis: HTMLElement[] = [];
+      for (let i = 0; i < 6; i++) {
+        const m = document.createElement("div");
+        m.className = "absolute inset-0 rounded-[18px] border border-prince-gold/40 holo-bg";
+        m.innerHTML = `<div class="absolute inset-[6px] rounded-[14px] border border-prince-gold/30 flex flex-col items-center justify-center gap-4">
+          <img src="/img/favicon.svg" alt="V3 Sports" class="w-24 h-24 sm:w-28 sm:h-28 drop-shadow-[0_8px_24px_rgba(201,166,88,0.45)]" />
+          <span class="font-gaming text-prince-gold text-lg tracking-[0.35em]">PRINCE CUP</span>
+        </div>`;
+        stage.appendChild(m);
+        minis.push(m);
+      }
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          stage.remove();
+          const picked = cards[Math.floor(Math.random() * cards.length)];
+          const el = buildCardEl(picked);
+          el.style.opacity = "0";
+          drawArea.appendChild(el);
+          gsap.fromTo(el, { y: 30, opacity: 0, scale: 0.85 }, { y: 0, opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.4)" });
+          modalSub.textContent = `${rarityColors[picked.rarityLevel].label} · CARTA SACADA`;
+          modalTitle.textContent = picked.name;
+          drawAgainBtn.classList.remove("hidden");
+          Sfx.reveal(picked.rarityLevel);
+          const seal = el.querySelector<HTMLElement>(".card-seal");
+          if (seal) {
+            gsap.fromTo(
+              seal,
+              { opacity: 0, scale: 2.4, rotate: 28 },
+              { opacity: 1, scale: 1, rotate: -8, duration: 0.4, delay: 0.55, ease: "back.out(2)", onStart: () => Sfx.stamp() }
+            );
+          }
+        },
+      });
+
+      tl.fromTo(minis, { y: -200, opacity: 0, rotate: -20 }, { y: 0, opacity: 1, rotate: (i) => (i - 2.5) * 4, duration: 0.45, ease: "back.out(1.4)", stagger: 0.06, onStart: () => Sfx.deal() });
+      tl.to(minis, { x: () => (Math.random() - 0.5) * 250, y: () => (Math.random() - 0.5) * 100, rotate: () => (Math.random() - 0.5) * 60, duration: 0.5, ease: "power1.inOut", stagger: 0.03, onStart: () => Sfx.whoosh(1) }, "+=0.15");
+      tl.to(minis, { x: 0, y: 0, rotate: 0, duration: 0.4, ease: "power2.in", stagger: 0.02, onStart: () => Sfx.whoosh(0.85) });
+      tl.to(minis, { opacity: 0, scale: 0.85, duration: 0.3, stagger: 0.04 });
+    }
+
+    drawBtn.addEventListener("click", () => { Sfx.resume(); openModal(); drawRandom(); });
+    drawAgainBtn.addEventListener("click", () => { Sfx.resume(); drawAgainBtn.classList.add("hidden"); drawRandom(); });
+  </script>
+
+  <Footer slot="footer" />
+</BaseLayout>

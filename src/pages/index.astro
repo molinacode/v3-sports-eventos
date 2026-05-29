@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import EventTeasers from "../components/EventTeasers.astro";
+import DirectorPanel from "../components/DirectorPanel.astro";
+import CalendarSlider from "../components/CalendarSlider.astro";
+---
+
+<BaseLayout title="V3 Sports Eventos · Temporada 2026/27" description="Liga Femenina, Prince Padel Cup y Ranking Mixto. 12 jornadas de septiembre a mayo.">
+  <Nav slot="nav" />
+  <Hero />
+  <EventTeasers />
+  <DirectorPanel />
+  <CalendarSlider />
+
+  <section class="container-padel py-20">
+    <div class="rounded-3xl p-8 sm:p-14 border border-club-ink/10 bg-gradient-to-br from-club-green/30 via-club-bg to-club-bg relative overflow-hidden reveal">
+      <div class="absolute -top-20 -right-20 w-72 h-72 rounded-full blur-3xl opacity-30" style="background: radial-gradient(circle, #C9A658 0%, transparent 60%);"></div>
+      <div class="relative grid md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-7">
+          <div class="eyebrow">Cómo apuntarse</div>
+          <h2 class="title-display text-4xl sm:text-6xl mt-3">Clasificaciones en tiempo real.</h2>
+          <p class="mt-4 text-club-ink/70 max-w-xl">Cada evento tendrá su propia clasificación pública en xporty (o en la plataforma que designe el club). Los jugadores consultan resultados, próximos partidos y ranking desde el móvil.</p>
+        </div>
+        <div class="md:col-span-5 flex flex-col gap-3">
+          <a href="https://xporty.com/" target="_blank" rel="noopener" class="btn-primary justify-center text-base">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            Acceder a xporty
+          </a>
+          <a href="#calendario" class="btn-ghost justify-center">Ver calendario completo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

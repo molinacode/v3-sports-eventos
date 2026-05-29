@@ -1,0 +1,118 @@
+---
+import calendarData from "../data/calendar.json";
+import eventsData from "../data/events.json";
+
+const eventsMap = Object.fromEntries(eventsData.events.map((e) => [e.id, e]));
+const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+function fmt(dateStr: string) {
+  const d = new Date(dateStr + "T00:00:00");
+  return { day: String(d.getDate()).padStart(2, "0"), month: months[d.getMonth()].toUpperCase(), year: d.getFullYear() };
+}
+
+const today = new Date();
+const upcomingIdx = calendarData.rounds.findIndex((r) => new Date(r.date) >= today);
+const startIdx = upcomingIdx === -1 ? 0 : upcomingIdx;
+---
+
+<section id="calendario" class="py-20 sm:py-28">
+  <div class="container-padel mb-10">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+      <div>
+        <div class="eyebrow">Calendario · 12 jornadas garantizadas</div>
+        <h2 class="title-display text-5xl sm:text-7xl mt-3">De septiembre<br/>a mayo.</h2>
+      </div>
+      <p class="text-club-ink/70 max-w-md">Cada 3 semanas, sábado de pádel en el club. La Liga Femenina y la Prince Padel Cup alternan; el Ranking Mixto está siempre presente.</p>
+    </div>
+  </div>
+
+  <div class="container-padel">
+    <div class="swiper calendar-swiper">
+      <div class="swiper-wrapper">
+        {calendarData.rounds.map((round, idx) => {
+          const { day, month, year } = fmt(round.date);
+          const isPast = new Date(round.date) < today;
+          const isNext = idx === startIdx;
+          return (
+            <div class="swiper-slide">
+              <div class={`group relative h-[26rem] sm:h-[28rem] rounded-3xl overflow-hidden border ${isNext ? "border-club-gold" : "border-club-ink/10"} bg-gradient-to-br from-[#13201a] to-club-bg p-6 sm:p-8 flex flex-col`}>
+                {isNext && (
+                  <span class="absolute top-4 right-4 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-club-bg bg-club-gold px-2.5 py-1 rounded-full">
+                    <span class="w-1.5 h-1.5 rounded-full bg-club-bg animate-pulse"></span>
+                    Próxima
+                  </span>
+                )}
+                {isPast && (
+                  <span class="absolute top-4 right-4 text-[10px] font-bold uppercase tracking-[0.2em] text-club-ink/40 border border-club-ink/20 px-2.5 py-1 rounded-full">
+                    Disputada
+                  </span>
+                )}
+
+                <div class="flex items-baseline gap-2 text-club-ink/40">
+                  <span class="font-display text-sm tracking-widest">JORNADA</span>
+                  <span class="font-display text-2xl text-club-gold">{String(round.n).padStart(2, "0")}</span>
+                </div>
+
+                <div class="mt-4">
+                  <div class="font-display text-[7rem] sm:text-[8rem] leading-[0.85] text-club-ink">{day}</div>
+                  <div class="font-display tracking-[0.3em] text-club-gold text-xl mt-1">{month} <span class="text-club-ink/50">{year}</span></div>
+                  <div class="text-club-ink/60 text-sm mt-2 capitalize">{round.weekday}</div>
+                </div>
+
+                <div class="mt-auto space-y-2.5">
+                  {round.events.map((evId) => {
+                    const ev = eventsMap[evId];
+                    return (
+                      <a href={`/eventos/${ev.slug}`} class="flex items-center justify-between gap-3 p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 transition">
+                        <div class="flex items-center gap-3 min-w-0">
+                          <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style={`background: ${ev.accent};`}></span>
+                          <span class="font-semibold text-sm truncate">{ev.name}</span>
+                        </div>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-club-ink/50 group-hover:text-club-gold transition flex-shrink-0"><path d="M9 18l6-6-6-6"/></svg>
+                      </a>
+                    );
+                  })}
+                  {round.tag && (
+                    <div class="pt-2 text-club-gold text-xs uppercase tracking-wider">{round.tag}</div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div class="swiper-pagination !static mt-6"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import Swiper from "swiper";
+  import { Navigation, Pagination, Keyboard, Mousewheel } from "swiper/modules";
+
+  const swiper = new Swiper(".calendar-swiper", {
+    modules: [Navigation, Pagination, Keyboard, Mousewheel],
+    slidesPerView: 1.1,
+    spaceBetween: 16,
+    centeredSlides: false,
+    keyboard: { enabled: true },
+    mousewheel: { forceToAxis: true, sensitivity: 0.6 },
+    pagination: { el: ".swiper-pagination", clickable: true, dynamicBullets: true },
+    navigation: { prevEl: ".calendar-swiper .swiper-button-prev", nextEl: ".calendar-swiper .swiper-button-next" },
+    breakpoints: {
+      640: { slidesPerView: 2.1, spaceBetween: 20 },
+      1024: { slidesPerView: 3.1, spaceBetween: 24 },
+      1280: { slidesPerView: 4, spaceBetween: 24 },
+    },
+  });
+
+  // Snap to "next upcoming" round
+  const upcoming = document.querySelector(".swiper-slide .border-club-gold");
+  if (upcoming) {
+    const slides = Array.from(document.querySelectorAll(".calendar-swiper .swiper-slide"));
+    const idx = slides.findIndex((s) => s.contains(upcoming as Node));
+    if (idx >= 0) swiper.slideTo(Math.max(0, idx - 1), 800);
+  }
+</script>

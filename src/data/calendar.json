@@ -1,0 +1,85 @@
+{
+  "seasonStart": "2026-09-26",
+  "seasonEnd": "2027-05-15",
+  "cadenceWeeks": 3,
+  "rounds": [
+    {
+      "n": 1,
+      "date": "2026-09-26",
+      "weekday": "Sábado",
+      "events": ["prince-padel-cup", "ranking-mixto"],
+      "tag": "Apertura · Arranque Copa Otoño"
+    },
+    {
+      "n": 2,
+      "date": "2026-10-17",
+      "weekday": "Sábado",
+      "events": ["liga-femenina", "ranking-mixto"],
+      "tag": "Estreno Liga Femenina"
+    },
+    {
+      "n": 3,
+      "date": "2026-11-07",
+      "weekday": "Sábado",
+      "events": ["prince-padel-cup", "ranking-mixto"]
+    },
+    {
+      "n": 4,
+      "date": "2026-11-28",
+      "weekday": "Sábado",
+      "events": ["liga-femenina", "ranking-mixto"]
+    },
+    {
+      "n": 5,
+      "date": "2026-12-19",
+      "weekday": "Sábado",
+      "events": ["prince-padel-cup", "ranking-mixto"],
+      "tag": "Final Copa Otoño"
+    },
+    {
+      "n": 6,
+      "date": "2027-01-09",
+      "weekday": "Sábado",
+      "events": ["liga-femenina", "ranking-mixto"]
+    },
+    {
+      "n": 7,
+      "date": "2027-01-30",
+      "weekday": "Sábado",
+      "events": ["prince-padel-cup", "ranking-mixto"],
+      "tag": "Arranque Copa Primavera"
+    },
+    {
+      "n": 8,
+      "date": "2027-02-20",
+      "weekday": "Sábado",
+      "events": ["liga-femenina", "ranking-mixto"]
+    },
+    {
+      "n": 9,
+      "date": "2027-03-13",
+      "weekday": "Sábado",
+      "events": ["prince-padel-cup", "ranking-mixto"]
+    },
+    {
+      "n": 10,
+      "date": "2027-04-03",
+      "weekday": "Sábado",
+      "events": ["liga-femenina", "ranking-mixto"]
+    },
+    {
+      "n": 11,
+      "date": "2027-04-24",
+      "weekday": "Sábado",
+      "events": ["prince-padel-cup", "ranking-mixto"],
+      "tag": "Final Copa Primavera"
+    },
+    {
+      "n": 12,
+      "date": "2027-05-15",
+      "weekday": "Sábado",
+      "events": ["liga-femenina", "ranking-mixto"],
+      "tag": "Cierre de temporada · Entrega de premios"
+    }
+  ]
+}

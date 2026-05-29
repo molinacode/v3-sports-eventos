@@ -1,0 +1,48 @@
+---
+import eventsData from "../data/events.json";
+import Logo from "./Logo.astro";
+const { events, club, season } = eventsData;
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-club-ink/10">
+  <div class="container-padel py-14 grid md:grid-cols-4 gap-10">
+    <div class="md:col-span-2">
+      <div class="flex items-center gap-3">
+        <Logo variant="monogram" palette="site" class="h-12" />
+        <span class="font-display uppercase tracking-wider text-club-ink text-xl">V3 Sports Eventos</span>
+      </div>
+      <p class="text-club-ink/70 max-w-md mt-4">{club.tagline}</p>
+      <p class="eyebrow mt-6">Temporada {season}</p>
+    </div>
+
+    <div>
+      <div class="eyebrow mb-3">Eventos</div>
+      <ul class="space-y-2">
+        {events.map((ev) => (
+          <li><a href={`/eventos/${ev.slug}`} class="text-club-ink/80 hover:text-club-gold transition">{ev.name}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <div class="eyebrow mb-3">Clasificaciones</div>
+      <a href={club.rankingUrl} target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-club-ink/80 hover:text-club-gold transition">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        Ver rankings en xporty
+      </a>
+      <div class="mt-6 eyebrow mb-3">Modo presentación</div>
+      <p class="text-club-ink/60 text-sm">Pulsa la tecla <kbd class="px-2 py-1 rounded bg-club-ink/10 border border-club-ink/20 text-xs font-mono">F</kbd> para pantalla completa.</p>
+    </div>
+  </div>
+
+  <div class="border-t border-club-ink/10">
+    <div class="container-padel py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="text-club-ink/50 text-sm">© {year} {club.name}. Propuesta deportiva temporada {season}.</div>
+      <div class="flex items-center gap-2 text-club-gold text-sm">
+        <span class="w-2 h-2 rounded-full bg-club-gold animate-pulse"></span>
+        12 jornadas confirmadas
+      </div>
+    </div>
+  </div>
+</footer>

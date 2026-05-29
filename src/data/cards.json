@@ -1,0 +1,78 @@
+{
+  "deckName": "Cartas del Príncipe",
+  "subtitle": "8 cartas especiales · 1 carta por partido · Aleatoria",
+  "cards": [
+    {
+      "id": "tercer-saque",
+      "name": "3er Saque",
+      "rarity": "Común",
+      "rarityLevel": 1,
+      "icon": "serve",
+      "tagline": "Una bola más en la recámara",
+      "description": "Si el jugador falla el segundo saque, dispone de un TERCER saque adicional. Solo aplica una vez por juego."
+    },
+    {
+      "id": "doble-o-nada",
+      "name": "Doble o Nada",
+      "rarity": "Rara",
+      "rarityLevel": 2,
+      "icon": "dice",
+      "tagline": "El próximo punto pesa el doble",
+      "description": "El siguiente punto vale x2. Si lo gana la pareja que sacó la carta, suma 2 puntos. Si lo pierde, el rival suma 2."
+    },
+    {
+      "id": "punto-de-oro-eterno",
+      "name": "Punto de Oro Eterno",
+      "rarity": "Épica",
+      "rarityLevel": 3,
+      "icon": "crown",
+      "tagline": "Todo el set se decide a punto de oro",
+      "description": "Durante todo el set en curso, cada juego se resuelve directamente con punto de oro al llegar a iguales (40-40)."
+    },
+    {
+      "id": "pared-magica",
+      "name": "Pared Mágica",
+      "rarity": "Rara",
+      "rarityLevel": 2,
+      "icon": "wall",
+      "tagline": "Por las paredes también",
+      "description": "Durante el próximo juego, una bola que pegue directamente en la pared del rival (sin botar antes en pista) se considera VÁLIDA si entra en juego."
+    },
+    {
+      "id": "smash-real",
+      "name": "Smash Real",
+      "rarity": "Épica",
+      "rarityLevel": 3,
+      "icon": "smash",
+      "tagline": "Un remate. Un juego.",
+      "description": "El próximo remate por encima de la cabeza que entre dentro de la pista del rival otorga el juego completo a quien lo ejecuta."
+    },
+    {
+      "id": "comodin-principe",
+      "name": "Comodín del Príncipe",
+      "rarity": "Legendaria",
+      "rarityLevel": 4,
+      "icon": "swap",
+      "tagline": "Cambio de compañero",
+      "description": "Durante 1 juego, los jugadores intercambian compañero con los rivales. Al acabar ese juego, todo vuelve a la normalidad."
+    },
+    {
+      "id": "velocidad-turbo",
+      "name": "Velocidad Turbo",
+      "rarity": "Rara",
+      "rarityLevel": 2,
+      "icon": "bolt",
+      "tagline": "Un único saque permitido",
+      "description": "Durante el próximo juego, el rival solo dispone de UN saque. Si falla, doble falta inmediata."
+    },
+    {
+      "id": "corona",
+      "name": "La Corona",
+      "rarity": "Legendaria",
+      "rarityLevel": 4,
+      "icon": "tiara",
+      "tagline": "Tú eliges el lado",
+      "description": "Eliges el lado de la pista al iniciar el siguiente set, sin importar el resultado del set anterior."
+    }
+  ]
+}

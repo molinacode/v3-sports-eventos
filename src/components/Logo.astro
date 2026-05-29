@@ -1,0 +1,213 @@
+---
+// Logo V3 Sports - componente con varias variantes SVG.
+// Uso: <Logo variant="wordmark" palette="site" class="h-10" />
+//   variant: wordmark | compact | badge | monogram | racket | ball | image
+//   palette: brand (rojo+amarillo originales) | site (paleta de la web)
+
+interface Props {
+  variant?: "wordmark" | "compact" | "badge" | "monogram" | "racket" | "ball" | "image";
+  palette?: "brand" | "site";
+  class?: string;
+  title?: string;
+  /** Ruta del logo real cuando variant="image" */
+  src?: string;
+}
+
+const {
+  variant = "wordmark",
+  palette = "site",
+  class: className = "h-10",
+  title = "V3 Sports Eventos",
+  src = "/img/v3-sports.svg",
+} = Astro.props;
+
+// Paletas de color
+const colors =
+  palette === "brand"
+    ? {
+        ball1: "#E5332A",
+        ball2: "#B0211A",
+        accent: "#F2C200",
+        text: "#FFFFFF",
+        ring: "#E5332A",
+        deep: "#1A1A1A",
+      }
+    : {
+        ball1: "#D8A64A",
+        ball2: "#8B1538",
+        accent: "#C9A658",
+        text: "currentColor",
+        ring: "#C9A658",
+        deep: "#1E3A2B",
+      };
+
+// Monograma: cuadrado redondeado + la bola vectorial real de v3sports.
+// La bola, la costura y el "V3" son recortes: muestran el color del cuadrado.
+//  - brand: cuadrado claro -> bola roja con V3/costura en blanco (igual que el original).
+//  - site : cuadrado oscuro -> bola dorada con V3/costura en el tono oscuro.
+const mono =
+  palette === "brand"
+    ? {
+        square: "#FFFFFF",
+        border: "#E5332A",
+        stops: [
+          ["0%", "#FF6A52"],
+          ["45%", "#EF4136"],
+          ["100%", "#A81910"],
+        ] as [string, string][],
+      }
+    : {
+        // Degradado multicolor diagonal (vitalidad estilo Prince Cup) anclado en oro
+        square: "#0E1410",
+        border: "#C9A658",
+        stops: [
+          ["0%", "#FFF1C2"],
+          ["22%", "#FFD23F"],
+          ["48%", "#FF8A2B"],
+          ["74%", "#FF3D6E"],
+          ["92%", "#00E5FF"],
+          ["100%", "#00A9C7"],
+        ] as [string, string][],
+      };
+
+// IDs únicos por instancia para los gradientes (evita colisiones si hay varios logos en la página)
+const uid = Math.random().toString(36).slice(2, 8);
+const gBall = `ball-${uid}`;
+const gAccent = `acc-${uid}`;
+---
+
+{variant === "image" && (
+  <img src={src} alt={title} class={className} />
+)}
+
+{variant === "wordmark" && (
+  <svg class={className} viewBox="0 0 360 90" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label={title}>
+    <defs>
+      <linearGradient id={gBall} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color={colors.ball1} />
+        <stop offset="100%" stop-color={colors.ball2} />
+      </linearGradient>
+      <linearGradient id={gAccent} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color={colors.accent} />
+        <stop offset="100%" stop-color={colors.ball1} />
+      </linearGradient>
+    </defs>
+    <!-- V3 SP_RTS con la O = bola de padel -->
+    <text x="0" y="68" font-family="Anton, Impact, sans-serif" font-size="72" fill={colors.text} letter-spacing="-1">V3</text>
+    <text x="120" y="68" font-family="Anton, Impact, sans-serif" font-size="72" fill={colors.text} letter-spacing="-1">SP</text>
+    <text x="270" y="68" font-family="Anton, Impact, sans-serif" font-size="72" fill={colors.text} letter-spacing="-1">RTS</text>
+    <!-- gota/trazo -->
+    <path d="M236 60 C232 74 236 86 244 88 C238 80 240 70 246 62 Z" fill={`url(#${gAccent})`} />
+    <!-- bola como la O -->
+    <circle cx="246" cy="40" r="22" fill={`url(#${gBall})`} />
+    <path d="M230 26 C240 34 240 46 230 54" stroke={colors.accent} stroke-width="2.5" fill="none" opacity="0.85" />
+    <path d="M262 26 C252 34 252 46 262 54" stroke={colors.accent} stroke-width="2.5" fill="none" opacity="0.85" />
+  </svg>
+)}
+
+{variant === "compact" && (
+  <svg class={className} viewBox="0 0 150 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label={title}>
+    <defs>
+      <linearGradient id={gBall} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color={colors.ball1} />
+        <stop offset="100%" stop-color={colors.ball2} />
+      </linearGradient>
+    </defs>
+    <text x="0" y="46" font-family="Anton, Impact, sans-serif" font-size="48" fill={colors.text} letter-spacing="-1">V3</text>
+    <path d="M104 36 C100 48 104 58 112 60 C106 52 108 44 114 38 Z" fill={colors.accent} />
+    <circle cx="114" cy="24" r="18" fill={`url(#${gBall})`} />
+    <path d="M101 12 C110 19 110 29 101 36" stroke={colors.accent} stroke-width="2" fill="none" opacity="0.85" />
+    <path d="M127 12 C118 19 118 29 127 36" stroke={colors.accent} stroke-width="2" fill="none" opacity="0.85" />
+  </svg>
+)}
+
+{variant === "badge" && (
+  <svg class={className} viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label={title}>
+    <defs>
+      <linearGradient id={gBall} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color={colors.ball1} />
+        <stop offset="100%" stop-color={colors.ball2} />
+      </linearGradient>
+      <path id={`top-${uid}`} d="M 22 60 A 38 38 0 0 1 98 60" />
+      <path id={`bot-${uid}`} d="M 24 60 A 36 36 0 0 0 96 60" />
+    </defs>
+    <circle cx="60" cy="60" r="56" fill={colors.deep} stroke={colors.ring} stroke-width="2.5" />
+    <circle cx="60" cy="60" r="48" fill="none" stroke={colors.accent} stroke-width="1" opacity="0.5" />
+    <text font-family="Anton, Impact, sans-serif" font-size="13" letter-spacing="3" fill={colors.accent}>
+      <textPath href={`#top-${uid}`} startOffset="50%" text-anchor="middle">V3 SPORTS</textPath>
+    </text>
+    <text font-family="Anton, Impact, sans-serif" font-size="9" letter-spacing="4" fill={colors.accent} opacity="0.8">
+      <textPath href={`#bot-${uid}`} startOffset="50%" text-anchor="middle">EVENTOS</textPath>
+    </text>
+    <circle cx="60" cy="58" r="20" fill={`url(#${gBall})`} />
+    <path d="M46 44 C56 51 56 65 46 72" stroke={colors.accent} stroke-width="2.5" fill="none" opacity="0.85" />
+    <path d="M74 44 C64 51 64 65 74 72" stroke={colors.accent} stroke-width="2.5" fill="none" opacity="0.85" />
+  </svg>
+)}
+
+{variant === "monogram" && (
+  <span
+    class={`inline-flex items-center justify-center aspect-square rounded-[24%] ${className}`}
+    style={`background:${mono.square}; box-shadow: inset 0 0 0 2px ${mono.border};`}
+    role="img"
+    aria-label={title}
+  >
+    <svg class="w-[78%] h-[78%]" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id={gBall} gradientUnits="userSpaceOnUse" x1="0" y1="1800" x2="1800" y2="0">
+          {mono.stops.map(([offset, color]) => (
+            <stop offset={offset} stop-color={color} />
+          ))}
+        </linearGradient>
+      </defs>
+      <g transform="translate(0,180) scale(0.1,-0.1)" fill={`url(#${gBall})`} stroke="none">
+        <path d="M784 1790 c-34 -5 -80 -14 -103 -20 l-41 -11 20 -27 c11 -15 27 -61 36 -102 30 -142 -2 -302 -122 -620 -87 -231 -114 -329 -114 -420 0 -127 44 -224 140 -314 104 -96 238 -146 390 -146 107 0 179 18 298 75 157 75 243 187 288 373 47 197 -38 764 -150 1008 l-34 73 -94 45 c-51 25 -131 54 -178 66 -99 23 -249 32 -336 20z m150 -757 c2 -10 12 -69 22 -131 9 -62 18 -112 19 -110 2 2 26 59 53 128 l50 125 51 3 c28 2 51 -1 51 -5 0 -5 -40 -96 -89 -203 l-88 -195 -44 -3 -44 -3 -41 198 c-23 109 -40 201 -37 206 2 4 24 7 48 7 33 0 45 -4 49 -17z m449 -22 c30 -29 30 -98 1 -138 -20 -27 -20 -29 -2 -58 63 -104 -69 -228 -182 -170 -30 16 -60 51 -60 71 0 7 16 18 36 24 32 11 38 10 55 -9 11 -12 24 -21 29 -21 19 0 41 34 38 59 -2 20 -9 27 -30 29 -29 3 -33 16 -22 60 4 15 14 22 30 22 33 0 54 44 33 66 -14 13 -18 13 -40 -5 -25 -19 -25 -19 -57 1 -18 11 -32 23 -32 27 0 9 38 44 65 60 31 18 113 8 138 -18z" />
+        <path d="M396 1640 c-85 -58 -206 -182 -254 -263 -53 -88 -99 -205 -118 -296 -25 -127 -16 -327 21 -441 78 -245 239 -433 460 -540 224 -109 456 -125 685 -47 561 192 785 863 452 1354 -36 53 -72 93 -72 81 0 -3 9 -31 21 -64 70 -202 124 -619 100 -779 -24 -163 -83 -285 -191 -396 -150 -153 -441 -239 -660 -195 -314 64 -530 297 -530 571 0 110 40 258 155 570 48 131 66 220 68 330 2 94 -14 146 -47 158 -9 4 -47 -15 -90 -43z" />
+      </g>
+    </svg>
+  </span>
+)}
+
+{variant === "racket" && (
+  <svg class={className} viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label={title}>
+    <defs>
+      <linearGradient id={gBall} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color={colors.ball1} />
+        <stop offset="100%" stop-color={colors.ball2} />
+      </linearGradient>
+    </defs>
+    <!-- pala -->
+    <g stroke={colors.accent} stroke-width="3.5" fill="none">
+      <ellipse cx="34" cy="34" rx="26" ry="30" />
+      <path d="M34 64 L34 84" stroke-linecap="round" />
+      <circle cx="26" cy="28" r="2.4" fill={colors.accent} stroke="none" />
+      <circle cx="42" cy="28" r="2.4" fill={colors.accent} stroke="none" />
+      <circle cx="26" cy="40" r="2.4" fill={colors.accent} stroke="none" />
+      <circle cx="42" cy="40" r="2.4" fill={colors.accent} stroke="none" />
+      <circle cx="34" cy="34" r="2.4" fill={colors.accent} stroke="none" />
+    </g>
+    <circle cx="70" cy="50" r="9" fill={`url(#${gBall})`} />
+    <text x="92" y="58" font-family="Anton, Impact, sans-serif" font-size="46" fill={colors.text} letter-spacing="-1">V3</text>
+    <text x="150" y="58" font-family="Anton, Impact, sans-serif" font-size="22" letter-spacing="2" fill={colors.accent}>SPORTS</text>
+  </svg>
+)}
+
+{variant === "ball" && (
+  <svg class={className} viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label={title}>
+    <defs>
+      <linearGradient id={gBall} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color={colors.ball1} />
+        <stop offset="100%" stop-color={colors.ball2} />
+      </linearGradient>
+      <linearGradient id={gAccent} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color={colors.accent} />
+        <stop offset="100%" stop-color={colors.ball1} />
+      </linearGradient>
+    </defs>
+    <!-- gota -->
+    <path d="M30 60 C20 82 30 98 44 98 C34 86 38 72 50 64 Z" fill={`url(#${gAccent})`} />
+    <circle cx="44" cy="34" r="30" fill={`url(#${gBall})`} />
+    <path d="M22 12 C40 24 40 44 22 56" stroke={colors.accent} stroke-width="3" fill="none" opacity="0.9" />
+    <path d="M66 12 C48 24 48 44 66 56" stroke={colors.accent} stroke-width="3" fill="none" opacity="0.9" />
+  </svg>
+)}

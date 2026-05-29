@@ -1,0 +1,202 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import PrizeIcon from "../../components/PrizeIcon.astro";
+import eventsData from "../../data/events.json";
+import calendarData from "../../data/calendar.json";
+
+const ev = eventsData.events.find((e) => e.slug === "liga-femenina")!;
+const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+const rounds = calendarData.rounds.filter((r) => r.events.includes("liga-femenina"));
+---
+
+<BaseLayout title={`${ev.name} · V3 Sports Eventos`} description={ev.headline} themeClass="theme-fem">
+  <Nav slot="nav" />
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute inset-0" style="background: linear-gradient(165deg, #5C0E25 0%, #8B1538 45%, #0E1410 100%);"></div>
+      <div class="absolute inset-0 bg-noise opacity-[0.08] mix-blend-overlay"></div>
+      <div class="absolute -top-40 -right-32 w-[40rem] h-[40rem] rounded-full blur-3xl opacity-30" style="background: radial-gradient(circle, #C9A658 0%, transparent 60%);"></div>
+    </div>
+
+    <div class="container-padel pt-12 sm:pt-20 pb-16 sm:pb-24 text-white">
+      <a href="/" class="inline-flex items-center gap-2 text-fem-rosa hover:text-fem-cream text-sm mb-8">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        Volver al programa
+      </a>
+
+      <div class="grid lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-7">
+          <div class="eyebrow text-fem-rosa">Evento 01 · {ev.subtitle}</div>
+          <h1 class="title-display text-[14vw] sm:text-[10vw] lg:text-[9rem] mt-4 leading-[0.85] reveal">{ev.name}</h1>
+          <p class="font-serif italic text-fem-rosa text-2xl sm:text-3xl mt-4 reveal">{ev.headline}</p>
+          <p class="mt-6 text-white/80 max-w-xl reveal">{ev.pitch}</p>
+        </div>
+        <div class="lg:col-span-5 reveal">
+          <div class="grid grid-cols-2 gap-3">
+            <div class="rounded-2xl p-5 border border-white/10 bg-white/5 backdrop-blur-sm">
+              <div class="text-xs uppercase tracking-[0.25em] text-fem-rosa">Periodicidad</div>
+              <div class="font-display text-2xl mt-2">6 jornadas</div>
+              <div class="text-white/60 text-xs mt-1">Cada 6 semanas</div>
+            </div>
+            <div class="rounded-2xl p-5 border border-white/10 bg-white/5 backdrop-blur-sm">
+              <div class="text-xs uppercase tracking-[0.25em] text-fem-rosa">Duración</div>
+              <div class="font-display text-2xl mt-2">30 min</div>
+              <div class="text-white/60 text-xs mt-1">4 partidos / jornada</div>
+            </div>
+            <div class="rounded-2xl p-5 border border-white/10 bg-white/5 backdrop-blur-sm">
+              <div class="text-xs uppercase tracking-[0.25em] text-fem-rosa">Pistas</div>
+              <div class="font-display text-2xl mt-2">3-4</div>
+              <div class="text-white/60 text-xs mt-1">Mínimo para arrancar</div>
+            </div>
+            <div class="rounded-2xl p-5 border border-white/10 bg-white/5 backdrop-blur-sm">
+              <div class="text-xs uppercase tracking-[0.25em] text-fem-rosa">Punto</div>
+              <div class="font-display text-2xl mt-2">de Oro</div>
+              <div class="text-white/60 text-xs mt-1">En todos los juegos</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROPUESTA DE VALOR -->
+  <section class="container-padel py-20">
+    <div class="grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-5 reveal">
+        <div class="eyebrow text-fem-burdeos">Para el club</div>
+        <h2 class="title-display text-4xl sm:text-5xl mt-3 text-club-ink">Mujeres del club.<br/><span class="font-serif italic text-fem-rosa">Futuras socias.</span></h2>
+        <p class="mt-4 text-club-ink/70">Un evento de bajo coste operativo que rentabiliza horas valle, consolida a las jugadoras del club y atrae a un público que tradicionalmente no llega a las ligas competitivas.</p>
+      </div>
+      <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4 reveal">
+        <div class="card-surface p-6 border-l-4 border-fem-burdeos">
+          <div class="font-display text-3xl text-club-gold">+</div>
+          <div class="mt-2 font-semibold">Ocupación en horas valle</div>
+          <p class="text-club-ink/60 text-sm mt-1">Sábado por la mañana, tradicionalmente con menor demanda. Lleno garantizado cada 6 semanas.</p>
+        </div>
+        <div class="card-surface p-6 border-l-4 border-fem-burdeos">
+          <div class="font-display text-3xl text-club-gold">+</div>
+          <div class="mt-2 font-semibold">Fidelización de socias</div>
+          <p class="text-club-ink/60 text-sm mt-1">Ambiente cuidado, no competitivo. Las jugadoras se vinculan al club a través de la liga.</p>
+        </div>
+        <div class="card-surface p-6 border-l-4 border-fem-burdeos">
+          <div class="font-display text-3xl text-club-gold">+</div>
+          <div class="mt-2 font-semibold">Captación nuevas inscripciones</div>
+          <p class="text-club-ink/60 text-sm mt-1">Cada pareja puede traer amigas no socias. Conversión potencial a cuota mensual.</p>
+        </div>
+        <div class="card-surface p-6 border-l-4 border-fem-burdeos">
+          <div class="font-display text-3xl text-club-gold">+</div>
+          <div class="mt-2 font-semibold">Imagen y prestigio</div>
+          <p class="text-club-ink/60 text-sm mt-1">El club como referencia local del pádel femenino de iniciación.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMATO Y PUNTUACIÓN -->
+  <section class="bg-fem-cream text-[#2a0f1e] py-20">
+    <div class="container-padel grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-6">
+        <div class="font-display uppercase tracking-[0.3em] text-xs text-fem-burdeos">Formato de juego</div>
+        <h2 class="font-display text-5xl sm:text-6xl mt-3 uppercase leading-[0.9]">Cuatro partidos.<br/>Treinta minutos.</h2>
+        <ul class="mt-8 space-y-4">
+          {ev.format.map((f) => (
+            <li class="flex items-start gap-4 pb-4 border-b border-fem-burdeos/15">
+              <span class="font-display text-fem-burdeos text-2xl leading-none">·</span>
+              <span class="text-lg">{f}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="lg:col-span-6">
+        <div class="font-display uppercase tracking-[0.3em] text-xs text-fem-burdeos">Puntuación</div>
+        <h2 class="font-display text-5xl sm:text-6xl mt-3 uppercase leading-[0.9]">Ranking <span class="italic font-serif font-normal text-fem-burdeos">único.</span></h2>
+        <div class="mt-8 grid grid-cols-3 gap-3">
+          <div class="rounded-2xl bg-fem-burdeos text-white p-6 text-center">
+            <div class="text-xs uppercase tracking-widest opacity-70">Victoria</div>
+            <div class="font-display text-6xl mt-2">{ev.scoring.victoria}</div>
+          </div>
+          <div class="rounded-2xl bg-[#2a0f1e] text-white p-6 text-center">
+            <div class="text-xs uppercase tracking-widest opacity-70">Empate</div>
+            <div class="font-display text-6xl mt-2">{ev.scoring.empate}</div>
+          </div>
+          <div class="rounded-2xl bg-white border border-fem-burdeos/20 p-6 text-center">
+            <div class="text-xs uppercase tracking-widest text-fem-burdeos">Derrota</div>
+            <div class="font-display text-6xl mt-2">{ev.scoring.derrota}</div>
+          </div>
+        </div>
+        <p class="mt-6 text-[#2a0f1e]/70">Sorteo de parejas al inicio de cada jornada. La puntuación se acumula a lo largo de toda la liga para un ranking único.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREMIOS -->
+  <section class="container-padel py-20">
+    <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+      <div class="eyebrow text-fem-burdeos">Premios al cierre de liga</div>
+      <h2 class="title-display text-4xl sm:text-6xl mt-3">Más allá de la <span class="font-serif italic text-fem-rosa">clasificación.</span></h2>
+      <p class="mt-4 text-club-ink/70">Los premios reconocen tanto el desempeño deportivo como los gestos que dan vida al ambiente del club.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {ev.prizes.map((p) => (
+        <div class="reveal card-surface p-7 hover-lift group relative overflow-hidden">
+          <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition" style="background: radial-gradient(circle, #C9A658 0%, transparent 70%);"></div>
+          <div class="relative">
+            <div class="w-14 h-14 rounded-full bg-fem-burdeos/10 border border-fem-burdeos/30 flex items-center justify-center text-club-gold">
+              <PrizeIcon name={p.icon} color="#C9A658" />
+            </div>
+            <div class="font-display uppercase text-2xl mt-5">{p.title}</div>
+            <p class="text-club-ink/70 mt-2 text-sm">{p.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CALENDARIO DE LA LIGA -->
+  <section class="container-padel py-20">
+    <div class="rounded-3xl bg-gradient-to-br from-fem-burdeos to-[#5C0E25] text-white p-8 sm:p-12 relative overflow-hidden reveal">
+      <div class="absolute inset-0 bg-noise opacity-[0.08] mix-blend-overlay"></div>
+      <div class="relative grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-5">
+          <div class="font-display uppercase tracking-[0.3em] text-xs text-fem-rosa">Calendario Liga Femenina</div>
+          <h2 class="title-display text-4xl sm:text-5xl mt-3">6 jornadas.<br/>Septiembre a mayo.</h2>
+          <p class="mt-4 text-white/80">Alternando con la Prince Padel Cup. Cada jornada coincide con el Ranking Mixto: las pistas se llenan, el club factura.</p>
+        </div>
+        <div class="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {rounds.map((r) => {
+            const d = new Date(r.date + "T00:00:00");
+            return (
+              <div class="rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 p-4 text-center">
+                <div class="text-[10px] uppercase tracking-widest text-fem-rosa">J{String(r.n).padStart(2, "0")}</div>
+                <div class="font-display text-4xl mt-1">{String(d.getDate()).padStart(2, "0")}</div>
+                <div class="text-xs text-white/70 uppercase">{months[d.getMonth()]} {d.getFullYear()}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container-padel pb-20">
+    <div class="rounded-3xl border border-club-ink/10 p-8 sm:p-12 bg-gradient-to-br from-club-bg to-[#1a0d12] reveal">
+      <div class="grid lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7">
+          <h3 class="title-display text-3xl sm:text-4xl">Precio a negociar con el club.</h3>
+          <p class="text-club-ink/70 mt-3 max-w-xl">Inscripción a la liga + cuota por partido disputado, a definir junto con el club.</p>
+        </div>
+        <div class="lg:col-span-5 flex flex-wrap gap-3 lg:justify-end">
+          <a href={eventsData.club.rankingUrl} target="_blank" rel="noopener" class="btn-primary">Clasificación en xporty</a>
+          <a href="/#calendario" class="btn-ghost">Ver calendario</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

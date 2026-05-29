@@ -1,0 +1,238 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import PrizeIcon from "../../components/PrizeIcon.astro";
+import eventsData from "../../data/events.json";
+import calendarData from "../../data/calendar.json";
+
+const ev = eventsData.events.find((e) => e.slug === "ranking-mixto")!;
+const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+const rounds = calendarData.rounds;
+
+const courtPoints = [
+  { court: "Pista 1", points: 10, label: "Top" },
+  { court: "Pista 2", points: 8, label: "Sub-Top" },
+  { court: "Pista 3", points: 6, label: "Medio" },
+  { court: "Pista 4", points: 4, label: "Base" },
+];
+---
+
+<BaseLayout title={`${ev.name} · V3 Sports Eventos`} description={ev.headline} themeClass="theme-mixto">
+  <Nav slot="nav" />
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute inset-0" style="background: linear-gradient(165deg, #0F1B3D 0%, #1A2A55 50%, #0E1410 100%);"></div>
+      <div class="absolute inset-0 bg-noise opacity-[0.08] mix-blend-overlay"></div>
+      <div class="absolute -top-32 -left-32 w-[40rem] h-[40rem] rounded-full blur-3xl opacity-25" style="background: radial-gradient(circle, #C6FF3D 0%, transparent 60%);"></div>
+    </div>
+
+    <div class="container-padel pt-12 sm:pt-20 pb-16 sm:pb-24 text-white">
+      <a href="/" class="inline-flex items-center gap-2 text-mixto-court hover:text-white text-sm mb-8">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        Volver al programa
+      </a>
+
+      <div class="grid lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-7">
+          <div class="eyebrow" style="color: #C6FF3D;">Evento 03 · {ev.subtitle}</div>
+          <h1 class="title-display text-[14vw] sm:text-[10vw] lg:text-[9rem] mt-4 leading-[0.85] reveal">RANKING<br/><span style="color: #C6FF3D;">MIXTO</span></h1>
+          <p class="font-display italic text-mixto-court text-2xl sm:text-3xl mt-4 reveal">{ev.headline}</p>
+          <p class="mt-6 text-white/80 max-w-xl reveal">{ev.pitch}</p>
+        </div>
+
+        {/*
+          INFO FINANCIERA CAPADA. Bloque original con ingresos previstos
+          (reactivar cuando se quiera mostrar cifras de dinero al cliente):
+
+          <div class="lg:col-span-5 reveal">
+            <div class="rounded-3xl p-6 sm:p-8 border border-mixto-court/30 bg-mixto-court/5 backdrop-blur-sm">
+              <div class="text-xs uppercase tracking-[0.25em] text-mixto-court">Ingresos previstos / temporada</div>
+              <div class="font-display text-6xl sm:text-7xl mt-3 text-white leading-none" data-counter data-target="3380" data-suffix=" €">0 €</div>
+              <div class="mt-3 text-white/70 text-sm">Estimación con 16 jugadores × 13 €.</div>
+              ...
+            </div>
+          </div>
+        */}
+
+        <!-- Stat principal: cómo se juega (sin info financiera) -->
+        <div class="lg:col-span-5 reveal">
+          <div class="rounded-3xl p-6 sm:p-8 border border-mixto-court/30 bg-mixto-court/5 backdrop-blur-sm">
+            <div class="text-xs uppercase tracking-[0.25em] text-mixto-court">Formato pozo · Cada 3 semanas</div>
+            <div class="font-display text-6xl sm:text-7xl mt-3 text-white leading-none">POZO</div>
+            <div class="mt-3 text-white/70 text-sm">Partidos de 15-20' con cambio de pista y de compañero. Precio a negociar con el club.</div>
+            <div class="mt-5 pt-5 border-t border-white/10 grid grid-cols-3 gap-3 text-center">
+              <div>
+                <div class="font-display text-3xl text-mixto-court">{rounds.length}</div>
+                <div class="text-[10px] uppercase tracking-widest text-white/60">Jornadas</div>
+              </div>
+              <div>
+                <div class="font-display text-3xl text-mixto-court">4+</div>
+                <div class="text-[10px] uppercase tracking-widest text-white/60">Pistas mín.</div>
+              </div>
+              <div>
+                <div class="font-display text-3xl text-mixto-court">3w</div>
+                <div class="text-[10px] uppercase tracking-widest text-white/60">Cadencia</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMATO POZO -->
+  <section class="container-padel py-20 text-white">
+    <div class="grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-5 reveal">
+        <div class="eyebrow text-mixto-court">Cómo funciona</div>
+        <h2 class="title-display text-4xl sm:text-5xl mt-3">Formato <span style="color: #C6FF3D;">pozo.</span></h2>
+        <p class="mt-4 text-white/75">Partidos de 15-20 minutos. Al sonar el timer: cambio de pista, cambio de compañero. Si ganas subes una pista; si pierdes bajas una. Cada jugador rota durante toda la jornada.</p>
+        <p class="mt-3 text-white/60 text-sm">El nivel es único (medio-bajo / medio-alto) y mixto. Cualquiera puede apuntarse jornada a jornada, sin compromiso.</p>
+      </div>
+      <div class="lg:col-span-7 reveal">
+        <!-- Diagrama de pistas -->
+        <div class="grid grid-cols-2 gap-3">
+          {courtPoints.map((c, idx) => (
+            <div class={`rounded-2xl p-5 border ${idx === 0 ? "border-mixto-court bg-mixto-court/10" : "border-white/10 bg-white/5"}`}>
+              <div class="flex items-baseline justify-between">
+                <div class="font-display uppercase text-lg">{c.court}</div>
+                <div class={`text-xs px-2 py-0.5 rounded-full ${idx === 0 ? "bg-mixto-court text-mixto-deep" : "bg-white/10 text-white/70"}`}>{c.label}</div>
+              </div>
+              <div class={`font-display text-5xl mt-3 ${idx === 0 ? "text-mixto-court" : "text-white"}`}>+{c.points}</div>
+              <div class="text-white/50 text-xs mt-1 uppercase tracking-widest">Puntos finales</div>
+            </div>
+          ))}
+        </div>
+        <div class="mt-4 text-white/60 text-sm text-center italic">Los puntos se asignan según la pista en la que termina cada jugador la jornada.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QUÉ ES LA MEJOR INVERSIÓN -->
+  <section class="bg-mixto-court text-mixto-deep py-20">
+    <div class="container-padel">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-6">
+          <div class="font-display uppercase tracking-[0.3em] text-xs text-mixto-deep/70">La máquina de ingresos del club</div>
+          <h2 class="font-display text-5xl sm:text-7xl mt-3 uppercase leading-[0.9]">Recurrente.<br/>Predecible.<br/>Sin compromiso.</h2>
+          <p class="mt-6 text-mixto-deep/80 text-lg max-w-xl">Cada 3 semanas, mismo día, mismo formato. Los jugadores no necesitan inscribirse de toda la temporada: pagan su cuota y juegan. Las pistas se llenan, el club factura. <strong>Las 12 jornadas coinciden con la Liga Femenina o con la Prince Padel Cup</strong>, multiplicando la actividad del club.</p>
+        </div>
+        <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+          <div class="rounded-2xl bg-mixto-deep text-white p-6">
+            <div class="font-display text-5xl text-mixto-court">12</div>
+            <div class="mt-2 text-sm uppercase tracking-wider text-white/70">Jornadas / temporada</div>
+          </div>
+          <div class="rounded-2xl bg-mixto-deep text-white p-6">
+            <div class="font-display text-5xl text-mixto-court">4</div>
+            <div class="mt-2 text-sm uppercase tracking-wider text-white/70">Pistas mín / jornada</div>
+          </div>
+          <div class="rounded-2xl bg-mixto-deep text-white p-6">
+            <div class="font-display text-5xl text-mixto-court">~3h</div>
+            <div class="mt-2 text-sm uppercase tracking-wider text-white/70">Duración jornada</div>
+          </div>
+          <div class="rounded-2xl bg-mixto-deep text-white p-6">
+            <div class="font-display text-5xl text-mixto-court">0 €</div>
+            <div class="mt-2 text-sm uppercase tracking-wider text-white/70">Inversión del club</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDARIO -->
+  <section class="container-padel py-20">
+    <div class="rounded-3xl p-8 sm:p-12 border border-mixto-court/30 bg-gradient-to-br from-mixto-deep to-club-bg text-white reveal">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+        <div>
+          <div class="eyebrow text-mixto-court">Calendario Ranking Mixto</div>
+          <h3 class="title-display text-4xl sm:text-5xl mt-3">12 sábados.<br/>Sin descanso.</h3>
+        </div>
+        <p class="text-white/70 max-w-md">Apertura: 26 de septiembre · Cierre: 15 de mayo. Cada jornada coincide con Liga Femenina o Prince Padel Cup.</p>
+      </div>
+
+      <div class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-7 gap-3">
+        {rounds.map((r) => {
+          const d = new Date(r.date + "T00:00:00");
+          return (
+            <div class="rounded-xl bg-white/5 border border-white/10 p-3 text-center hover:border-mixto-court transition">
+              <div class="text-[10px] uppercase tracking-widest text-mixto-court">J{String(r.n).padStart(2, "0")}</div>
+              <div class="font-display text-3xl mt-1">{String(d.getDate()).padStart(2, "0")}</div>
+              <div class="text-[10px] text-white/60 uppercase">{months[d.getMonth()]} {d.getFullYear()}</div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- PREMIOS -->
+  <section class="container-padel py-20">
+    <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+      <div class="eyebrow text-mixto-court">Premios al cierre de temporada · Mayo</div>
+      <h2 class="title-display text-4xl sm:text-6xl mt-3 text-white">Reconocer la <span style="color: #C6FF3D;">constancia.</span></h2>
+    </div>
+    <div class="grid sm:grid-cols-3 gap-4">
+      {ev.prizes.map((p) => (
+        <div class="reveal card-surface p-7 hover-lift relative overflow-hidden group">
+          <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl opacity-25 group-hover:opacity-45 transition" style="background: radial-gradient(circle, #C6FF3D 0%, transparent 70%);"></div>
+          <div class="relative">
+            <div class="w-14 h-14 rounded-full bg-mixto-court/10 border border-mixto-court/30 flex items-center justify-center">
+              <PrizeIcon name={p.icon} color="#C6FF3D" />
+            </div>
+            <div class="font-display uppercase text-xl mt-5 text-white">{p.title}</div>
+            <p class="text-white/70 mt-2 text-sm">{p.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container-padel pb-20">
+    <div class="rounded-3xl p-8 sm:p-12 bg-mixto-court text-mixto-deep reveal">
+      <div class="grid lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7">
+          <h3 class="title-display text-3xl sm:text-5xl">Apúntate jornada<br/>a jornada.</h3>
+          <p class="mt-3 text-mixto-deep/80 max-w-xl">Sin compromiso de temporada. Precio a negociar con el club. Cada 3 semanas durante 9 meses.</p>
+        </div>
+        <div class="lg:col-span-5 flex flex-wrap gap-3 lg:justify-end">
+          <a href={eventsData.club.rankingUrl} target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-mixto-deep text-mixto-court font-bold hover:scale-[1.02] transition">Clasificación en xporty</a>
+          <a href="/#calendario" class="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-mixto-deep text-mixto-deep font-semibold hover:bg-mixto-deep hover:text-mixto-court transition">Ver calendario</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { gsap } from "gsap";
+    const counters = document.querySelectorAll<HTMLElement>("[data-counter]");
+    const fmt = (n: number) => new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          const target = Number(el.dataset.target);
+          const suffix = el.dataset.suffix || "";
+          const isMoney = suffix.trim() === "€";
+          const obj = { v: 0 };
+          gsap.to(obj, {
+            v: target,
+            duration: 1.6,
+            ease: "power2.out",
+            onUpdate: () => {
+              const val = Math.floor(obj.v);
+              el.textContent = isMoney ? fmt(val) : `${val}${suffix}`;
+            },
+          });
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.4 });
+    counters.forEach((c) => observer.observe(c));
+  </script>
+
+  <Footer slot="footer" />
+</BaseLayout>

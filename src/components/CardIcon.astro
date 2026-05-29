@@ -1,0 +1,104 @@
+---
+interface Props {
+  name: string;
+  size?: number;
+}
+const { name, size = 80 } = Astro.props;
+---
+
+<svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  {name === "serve" && (
+    <g>
+      <defs>
+        <linearGradient id="g-serve" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#FFD23F"/>
+          <stop offset="100%" stop-color="#FF8800"/>
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="35" r="14" fill="url(#g-serve)"/>
+      <path d="M50 49 L42 70 L58 70 Z" fill="url(#g-serve)" opacity="0.7"/>
+      <path d="M28 78 Q50 88 72 78" stroke="#FFD23F" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <text x="50" y="40" text-anchor="middle" font-family="Bebas Neue" font-size="20" fill="#0A0A0A" font-weight="bold">3</text>
+    </g>
+  )}
+  {name === "dice" && (
+    <g>
+      <rect x="20" y="20" width="60" height="60" rx="12" fill="#FFD23F" stroke="#0A0A0A" stroke-width="3"/>
+      <circle cx="35" cy="35" r="5" fill="#0A0A0A"/>
+      <circle cx="50" cy="50" r="5" fill="#0A0A0A"/>
+      <circle cx="65" cy="65" r="5" fill="#0A0A0A"/>
+      <circle cx="65" cy="35" r="5" fill="#0A0A0A"/>
+      <circle cx="35" cy="65" r="5" fill="#0A0A0A"/>
+    </g>
+  )}
+  {name === "crown" && (
+    <g>
+      <defs>
+        <linearGradient id="g-crown" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FFE680"/>
+          <stop offset="100%" stop-color="#FFD23F"/>
+        </linearGradient>
+      </defs>
+      <path d="M20 35 L30 60 L50 35 L70 60 L80 35 L75 75 L25 75 Z" fill="url(#g-crown)" stroke="#FF2E63" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="20" cy="32" r="5" fill="#FF2E63"/>
+      <circle cx="50" cy="30" r="6" fill="#00E5FF"/>
+      <circle cx="80" cy="32" r="5" fill="#FF2E63"/>
+      <rect x="22" y="78" width="56" height="6" rx="2" fill="#FFD23F"/>
+    </g>
+  )}
+  {name === "wall" && (
+    <g>
+      <rect x="22" y="28" width="56" height="44" rx="3" fill="#0A0A0A" stroke="#FFD23F" stroke-width="3"/>
+      <line x1="22" y1="42" x2="78" y2="42" stroke="#FFD23F" stroke-width="2"/>
+      <line x1="22" y1="56" x2="78" y2="56" stroke="#FFD23F" stroke-width="2"/>
+      <line x1="40" y1="28" x2="40" y2="42" stroke="#FFD23F" stroke-width="2"/>
+      <line x1="60" y1="42" x2="60" y2="56" stroke="#FFD23F" stroke-width="2"/>
+      <line x1="35" y1="56" x2="35" y2="72" stroke="#FFD23F" stroke-width="2"/>
+      <line x1="65" y1="56" x2="65" y2="72" stroke="#FFD23F" stroke-width="2"/>
+      <circle cx="70" cy="80" r="5" fill="#FF2E63" stroke="#FFD23F" stroke-width="2"/>
+    </g>
+  )}
+  {name === "smash" && (
+    <g>
+      <path d="M30 25 L70 65" stroke="#00E5FF" stroke-width="6" stroke-linecap="round"/>
+      <path d="M70 25 L30 65" stroke="#FFD23F" stroke-width="6" stroke-linecap="round" opacity="0.4"/>
+      <circle cx="70" cy="65" r="10" fill="#FFD23F" stroke="#0A0A0A" stroke-width="2"/>
+      <path d="M55 78 L45 90 M45 78 L55 90" stroke="#FF2E63" stroke-width="4" stroke-linecap="round"/>
+      <path d="M22 22 L18 18 M28 22 L28 14 M34 22 L38 18" stroke="#FFD23F" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  )}
+  {name === "swap" && (
+    <g>
+      <circle cx="32" cy="35" r="10" fill="#FFD23F"/>
+      <circle cx="68" cy="65" r="10" fill="#FF2E63"/>
+      <path d="M42 35 Q50 35 50 50 Q50 65 58 65" stroke="#00E5FF" stroke-width="3.5" stroke-linecap="round" fill="none" marker-end="url(#arrow1)"/>
+      <path d="M58 65 Q50 65 50 50 Q50 35 42 35" stroke="#00E5FF" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.3"/>
+      <defs>
+        <marker id="arrow1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#00E5FF"/>
+        </marker>
+      </defs>
+    </g>
+  )}
+  {name === "bolt" && (
+    <g>
+      <path d="M55 18 L30 55 L48 55 L42 82 L70 42 L52 42 Z" fill="#FFD23F" stroke="#FF2E63" stroke-width="2.5" stroke-linejoin="round"/>
+    </g>
+  )}
+  {name === "tiara" && (
+    <g>
+      <defs>
+        <linearGradient id="g-tiara" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FFE680"/>
+          <stop offset="100%" stop-color="#C9A658"/>
+        </linearGradient>
+      </defs>
+      <path d="M18 65 Q30 35 50 35 Q70 35 82 65" fill="none" stroke="url(#g-tiara)" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="50" cy="30" r="7" fill="#FF2E63" stroke="#FFD23F" stroke-width="2"/>
+      <circle cx="28" cy="50" r="4" fill="#00E5FF"/>
+      <circle cx="72" cy="50" r="4" fill="#00E5FF"/>
+      <path d="M50 37 L50 25" stroke="#FFD23F" stroke-width="2"/>
+      <path d="M14 67 L86 67" stroke="url(#g-tiara)" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  )}
+</svg>
